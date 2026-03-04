@@ -1,13 +1,13 @@
-import golfRImage from "figma:asset/dfb736f1fc4a9204456d2c2a0349e8a9c64afbe9.png";
-import audiRS3Image from "figma:asset/8ec90a03904bbd76791a145fc447f94a85f29019.png";
-import golfGTIImage from "figma:asset/4bc2b5a66799dc4e59a71cf1bc4de3b8397c2838.png";
-import golfGTIDetail1 from "figma:asset/a5e04d2fadcd00beba808c5bd9be8194789e5066.png";
-import golfGTIDetail2 from "figma:asset/15e1b513343d0acaf41cabb66419ac77d7bcffb6.png";
-import golfGTIDetail3 from "figma:asset/af2e0ec6148599439d6187427f8a48c99ab05de0.png";
-import golfRDetail1 from "figma:asset/63cef2a2616c8b43fc48f973cccbeb0a531dbafd.png";
-import golfRDetail2 from "figma:asset/83f0ceac341d66e5fca23953c212e3fa55cb2077.png";
-import golfRDetail3 from "figma:asset/f0c6b4b5b31ccec9184f0215ad7ba945f528cf9b.png";
-import audiRS3Detail1 from "figma:asset/ac0803e9fbff1c8fcb2bfa272b523655cc98b709.png";
+import golfRImage from "@/assets/dfb736f1fc4a9204456d2c2a0349e8a9c64afbe9.png";
+import audiRS3Image from "@/assets/8ec90a03904bbd76791a145fc447f94a85f29019.png";
+import golfGTIImage from "@/assets/4bc2b5a66799dc4e59a71cf1bc4de3b8397c2838.png";
+import golfGTIDetail1 from "@/assets/a5e04d2fadcd00beba808c5bd9be8194789e5066.png";
+import golfGTIDetail2 from "@/assets/15e1b513343d0acaf41cabb66419ac77d7bcffb6.png";
+import golfGTIDetail3 from "@/assets/af2e0ec6148599439d6187427f8a48c99ab05de0.png";
+import golfRDetail1 from "@/assets/63cef2a2616c8b43fc48f973cccbeb0a531dbafd.png";
+import golfRDetail2 from "@/assets/83f0ceac341d66e5fca23953c212e3fa55cb2077.png";
+import golfRDetail3 from "@/assets/f0c6b4b5b31ccec9184f0215ad7ba945f528cf9b.png";
+import audiRS3Detail1 from "@/assets/ac0803e9fbff1c8fcb2bfa272b523655cc98b709.png";
 
 export interface Car {
   id: number;

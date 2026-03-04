@@ -1,7 +1,7 @@
 
-  # Luxe autoverhuurbedrijf website
+  # RapidCars Homepage Design
 
-  This is a code bundle for Luxe autoverhuurbedrijf website. The original project is available at https://www.figma.com/design/2aZxn0idQoG2QAUu78sBKx/Luxe-autoverhuurbedrijf-website.
+  This is a code bundle for RapidCars Homepage Design. The original project is available at https://www.figma.com/design/1q6zVgnF3ddp3pansuFbHR/RapidCars-Homepage-Design.
 
   ## Running the code
 

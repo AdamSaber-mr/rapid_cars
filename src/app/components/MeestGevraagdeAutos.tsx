@@ -5,7 +5,7 @@ import { cars } from './carData';
 
 export function MeestGevraagdeAutos() {
   return (
-    <section id="aanbod" className="py-24 lg:py-32 bg-white">
+    <section id="aanbod" className="py-16 sm:py-20 lg:py-32 bg-white">
       <div className="max-w-[1440px] mx-auto px-6 lg:px-16">
         {/* Section Header */}
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-16">
@@ -89,7 +89,7 @@ export function MeestGevraagdeAutos() {
         >
           <Link
             to="/aanbod"
-            className="inline-flex items-center gap-3 bg-[#0A0A0A] text-white px-10 py-4 text-[14px] tracking-[0.04em] uppercase hover:bg-[#7A1C1C] transition-colors duration-300"
+            className="inline-flex w-full sm:w-auto items-center justify-center gap-3 bg-[#0A0A0A] text-white px-10 py-4 text-[14px] tracking-[0.04em] uppercase hover:bg-[#7A1C1C] transition-colors duration-300"
             style={{ fontFamily: 'Inter, sans-serif', fontWeight: 500 }}
           >
             Bekijk Volledig Aanbod

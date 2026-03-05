@@ -35,8 +35,8 @@ export function WhyRapidCars() {
   return (
     <section id="waarom" className="bg-white">
       {/* Main Content */}
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-16 py-24 lg:py-32">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-16 py-16 sm:py-20 lg:py-32">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-24 items-center">
           {/* Left — Image */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -61,7 +61,7 @@ export function WhyRapidCars() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 0.6 }}
-              className="text-[clamp(2rem,4.5vw,3.25rem)] text-[#0A0A0A] tracking-[-0.025em] mb-7"
+              className="text-[clamp(2rem,4.5vw,3.25rem)] text-[#0A0A0A] tracking-[-0.025em] mb-6"
               style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, lineHeight: 1.1 }}
             >
               Niet zomaar een
@@ -74,8 +74,8 @@ export function WhyRapidCars() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-[#4A4A4A] mb-12 max-w-[480px]"
-              style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400, fontSize: '16px', lineHeight: 1.7 }}
+              className="text-[#4A4A4A] mb-10 max-w-[520px]"
+              style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400, fontSize: '15px', lineHeight: 1.75 }}
             >
               RapidCars staat voor snelheid, flexibiliteit en betrouwbaarheid zonder
               gedoe. We begrijpen dat je niet wilt wachten. Daarom zorgen we dat je
@@ -83,7 +83,7 @@ export function WhyRapidCars() {
             </motion.p>
 
             {/* USPs */}
-            <div className="space-y-6">
+            <div className="space-y-5">
               {usps.map((usp, index) => {
                 const Icon = usp.icon;
                 return (
@@ -95,7 +95,7 @@ export function WhyRapidCars() {
                     transition={{ duration: 0.4, delay: 0.15 + index * 0.08 }}
                     className="flex items-center gap-4"
                   >
-                    <div className="flex-shrink-0 w-10 h-10 rounded-full border border-[#D4D4D4] flex items-center justify-center">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-full border border-[#D4D4D4] flex items-center justify-center">
                       <Icon className="w-[18px] h-[18px] text-[#0A0A0A]" strokeWidth={1.5} />
                     </div>
                     <div>

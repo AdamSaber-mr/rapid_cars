@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 export function Tussenbanner() {
   return (
     <section className="relative w-full overflow-hidden bg-[#0A0A0A]">
-      <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[600px]">
+      <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[520px] lg:min-h-[600px]">
         {/* Image Side */}
         <div className="relative h-[400px] lg:h-auto overflow-hidden">
           <img
@@ -16,7 +16,7 @@ export function Tussenbanner() {
         </div>
 
         {/* Content Side */}
-        <div className="flex items-center px-6 lg:px-20 py-20 lg:py-32">
+        <div className="flex items-center px-6 lg:px-20 py-14 sm:py-16 lg:py-32">
           <div className="max-w-[480px]">
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -45,7 +45,7 @@ export function Tussenbanner() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-white/60 text-lg mb-12"
+              className="text-white/60 text-base sm:text-lg mb-10 sm:mb-12"
               style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400, lineHeight: 1.7 }}
             >
               Kies jouw sportieve auto vandaag en ervaar waar RapidCars voor staat.

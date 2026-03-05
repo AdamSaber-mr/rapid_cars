@@ -1,23 +1,19 @@
 import { Link } from 'react-router';
+import { BrandLogo } from './BrandLogo';
 
 export function Footer() {
   return (
     <footer className="bg-[#0A0A0A] text-white">
       <div className="max-w-[1440px] mx-auto px-6 lg:px-16">
         {/* Main Footer */}
-        <div className="py-12 lg:py-20 grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-8">
+        <div className="py-12 lg:py-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
           {/* Brand */}
-          <div className="col-span-2 lg:col-span-1">
+          <div className="sm:col-span-2 lg:col-span-1">
             <Link to="/">
-              <span
-                className="text-[22px] tracking-[-0.03em] text-white block mb-6"
-                style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600 }}
-              >
-                RAPIDCARS
-              </span>
+              <BrandLogo tone="light" size="md" className="mb-6 sm:scale-110 sm:origin-left" />
             </Link>
             <p
-              className="text-white/50 max-w-[260px]"
+              className="text-white/50 max-w-[320px]"
               style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400, fontSize: '13px', lineHeight: 1.7 }}
             >
               Premium autoverhuur voor wie sportief, snel en zonder gedoe wil rijden. Gevestigd in Nederland.
@@ -88,7 +84,7 @@ export function Footer() {
           </div>
 
           {/* Opening Hours */}
-          <div className="col-span-2 lg:col-span-1">
+          <div className="sm:col-span-2 lg:col-span-1">
             <h4
               className="text-[11px] tracking-[0.15em] uppercase text-white/40 mb-4 lg:mb-6"
               style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600 }}

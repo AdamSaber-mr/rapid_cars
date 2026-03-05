@@ -32,9 +32,9 @@ const steps = [
 export function HowItWorks() {
   return (
     <section id="hoe-het-werkt" className="bg-[#FAFAFA]">
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-16 py-24 lg:py-32">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-16 py-16 sm:py-20 lg:py-32">
         {/* Section Header */}
-        <div className="mb-16 lg:mb-20">
+        <div className="mb-12 lg:mb-20">
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -102,7 +102,7 @@ export function HowItWorks() {
         </div>
 
         {/* Steps Content */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 lg:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 lg:gap-8">
           {steps.map((step, index) => {
             const Icon = step.icon;
             return (
@@ -112,7 +112,7 @@ export function HowItWorks() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-40px' }}
                 transition={{ duration: 0.5, delay: 0.1 + index * 0.1 }}
-                className="flex flex-col"
+                className="flex flex-col rounded-2xl sm:rounded-none border border-[#EAEAEA] sm:border-0 p-5 sm:p-0 bg-white sm:bg-transparent"
               >
                 {/* Step number - visible on mobile only */}
                 <div className="sm:hidden mb-4">
@@ -181,17 +181,17 @@ export function HowItWorks() {
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
               <Link
                 to="/contact"
-                className="inline-flex items-center justify-center border border-[#0A0A0A] text-[#0A0A0A] px-8 py-3.5 uppercase hover:bg-[#0A0A0A] hover:text-white transition-colors duration-300"
+                className="inline-flex w-full sm:w-auto items-center justify-center border border-[#0A0A0A] text-[#0A0A0A] px-8 py-3.5 uppercase hover:bg-[#0A0A0A] hover:text-white transition-colors duration-300"
                 style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: '12px', letterSpacing: '0.08em' }}
               >
                 Contact Opnemen
               </Link>
               <Link
                 to="/aanbod"
-                className="inline-flex items-center justify-center bg-[#7A1C1C] text-white px-8 py-3.5 uppercase hover:bg-[#651717] transition-colors duration-300"
+                className="inline-flex w-full sm:w-auto items-center justify-center bg-[#7A1C1C] text-white px-8 py-3.5 uppercase hover:bg-[#651717] transition-colors duration-300"
                 style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: '12px', letterSpacing: '0.08em' }}
               >
                 Direct Reserveren

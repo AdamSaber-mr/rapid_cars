@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Link, useLocation } from 'react-router';
+import { BrandLogo } from './BrandLogo';
 
 const navLinks = [
   { label: 'Home', href: '/' },
@@ -52,18 +53,14 @@ export function Navbar() {
             : 'bg-transparent'
         }`}
       >
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-16">
-          <div className="flex items-center justify-between h-[72px]">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-16">
+          <div className="flex items-center justify-between h-[70px]">
             {/* Logo */}
-            <Link to="/" className="relative z-10">
-              <span
-                className={`text-[22px] tracking-[-0.03em] transition-colors duration-500 ${
-                  showSolid ? 'text-[#0A0A0A]' : 'text-white'
-                }`}
-                style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600 }}
-              >
-                RAPIDCARS
-              </span>
+            <Link to="/" className="relative z-10 max-[360px]:scale-95 origin-left" onClick={() => setMobileOpen(false)}>
+              <BrandLogo
+                tone={showSolid || mobileOpen ? 'dark' : 'light'}
+                size="sm"
+              />
             </Link>
 
             {/* Desktop Navigation */}
@@ -101,7 +98,7 @@ export function Navbar() {
             {/* Mobile Menu Toggle */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className={`lg:hidden relative z-10 p-1 transition-colors ${
+              className={`lg:hidden relative z-10 p-2 transition-colors ${
                 mobileOpen || showSolid ? 'text-[#0A0A0A]' : 'text-white'
               }`}
               aria-label="Menu"
@@ -120,36 +117,39 @@ export function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-white"
+            className="fixed inset-0 z-40 bg-white/98 backdrop-blur-sm"
           >
-            <div className="flex flex-col items-center justify-center h-full gap-8">
-              {navLinks.map((link, i) => (
-                <motion.div
-                  key={link.href}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.07 }}
-                >
-                  <Link
-                    to={link.href}
-                    onClick={() => handleNavClick(link.href)}
-                    className="text-[#0A0A0A] text-2xl tracking-[-0.01em]"
-                    style={{ fontFamily: 'Inter, sans-serif', fontWeight: 500 }}
+            <div className="h-full flex flex-col px-5 pt-[calc(env(safe-area-inset-top)+84px)] pb-[calc(env(safe-area-inset-bottom)+24px)]">
+              <div className="flex-1 flex flex-col justify-center gap-4">
+                {navLinks.map((link, i) => (
+                  <motion.div
+                    key={link.href}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.06 }}
                   >
-                    {link.label}
-                  </Link>
-                </motion.div>
-              ))}
+                    <Link
+                      to={link.href}
+                      onClick={() => handleNavClick(link.href)}
+                      className="block w-full rounded-xl border border-[#0A0A0A]/10 bg-[#0A0A0A]/[0.02] px-5 py-4 text-[#0A0A0A] text-[1.35rem] tracking-[-0.01em]"
+                      style={{ fontFamily: 'Inter, sans-serif', fontWeight: 500 }}
+                    >
+                      {link.label}
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
+                transition={{ delay: 0.25 }}
               >
                 <Link
                   to="/aanbod"
                   onClick={() => setMobileOpen(false)}
-                  className="mt-4 inline-block bg-[#7A1C1C] text-white px-10 py-3.5 text-[14px] tracking-[0.04em] uppercase"
-                  style={{ fontFamily: 'Inter, sans-serif', fontWeight: 500 }}
+                  className="block w-full text-center bg-[#7A1C1C] text-white px-8 py-4 rounded-xl text-[13px] tracking-[0.08em] uppercase"
+                  style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600 }}
                 >
                   Reserveer Nu
                 </Link>

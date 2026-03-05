@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 
 export function Hero() {
   return (
-    <section className="relative h-screen w-full overflow-hidden">
+    <section className="relative min-h-[100svh] w-full overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
@@ -16,7 +16,7 @@ export function Hero() {
       </div>
 
       {/* Content */}
-      <div className="relative h-full flex flex-col justify-end pb-32 md:pb-28 lg:pb-32">
+      <div className="relative h-full flex flex-col justify-end pb-24 md:pb-28 lg:pb-32">
         <div className="max-w-[1440px] mx-auto w-full px-6 lg:px-16">
           <div className="max-w-[800px]">
             <motion.p
@@ -45,7 +45,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
-              className="text-white/70 text-lg md:text-xl max-w-[480px] mb-12"
+              className="text-white/70 text-base md:text-xl max-w-[480px] mb-10 md:mb-12"
               style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400, lineHeight: 1.6 }}
             >
               Sportieve auto's, flexibel en zonder gedoe. Huur vandaag, rijd morgen.
@@ -59,14 +59,14 @@ export function Hero() {
             >
               <Link
                 to="/aanbod"
-                className="inline-flex items-center justify-center bg-[#7A1C1C] text-white px-10 py-4 text-[14px] tracking-[0.04em] uppercase hover:bg-[#651717] transition-colors duration-300"
+                className="inline-flex w-full sm:w-auto items-center justify-center bg-[#7A1C1C] text-white px-10 py-4 text-[14px] tracking-[0.04em] uppercase hover:bg-[#651717] transition-colors duration-300"
                 style={{ fontFamily: 'Inter, sans-serif', fontWeight: 500 }}
               >
                 Bekijk Aanbod
               </Link>
               <a
                 href="#hoe-het-werkt"
-                className="inline-flex items-center justify-center border border-white/30 text-white px-10 py-4 text-[14px] tracking-[0.04em] uppercase hover:bg-white/10 transition-colors duration-300"
+                className="inline-flex w-full sm:w-auto items-center justify-center border border-white/30 text-white px-10 py-4 text-[14px] tracking-[0.04em] uppercase hover:bg-white/10 transition-colors duration-300"
                 style={{ fontFamily: 'Inter, sans-serif', fontWeight: 500 }}
               >
                 Hoe Het Werkt

@@ -39,7 +39,8 @@ export function Navbar() {
     if (href.startsWith('/#') && isHomepage) {
       const el = document.querySelector(href.replace('/', ''));
       if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
+        const y = el.getBoundingClientRect().top + window.scrollY - 88;
+        window.scrollTo({ top: y, behavior: 'smooth' });
       }
     }
   };
@@ -54,13 +55,21 @@ export function Navbar() {
         }`}
       >
         <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-16">
-          <div className="flex items-center justify-between h-[70px]">
+          <div className="flex items-center justify-between h-[62px] lg:h-[72px]">
             {/* Logo */}
-            <Link to="/" className="relative z-10 max-[360px]:scale-95 origin-left" onClick={() => setMobileOpen(false)}>
-              <BrandLogo
-                tone={showSolid || mobileOpen ? 'dark' : 'light'}
-                size="sm"
-              />
+            <Link to="/" className="relative z-10 max-[360px]:scale-[0.92] origin-left" onClick={() => setMobileOpen(false)}>
+              <span className="block lg:hidden">
+                <BrandLogo
+                  tone={showSolid || mobileOpen ? 'dark' : 'light'}
+                  size="sm"
+                />
+              </span>
+              <span className="hidden lg:block">
+                <BrandLogo
+                  tone={showSolid || mobileOpen ? 'dark' : 'light'}
+                  size="md"
+                />
+              </span>
             </Link>
 
             {/* Desktop Navigation */}
@@ -119,7 +128,7 @@ export function Navbar() {
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-40 bg-white/98 backdrop-blur-sm"
           >
-            <div className="h-full flex flex-col px-5 pt-[calc(env(safe-area-inset-top)+84px)] pb-[calc(env(safe-area-inset-bottom)+24px)]">
+            <div className="h-full flex flex-col px-5 pt-[calc(env(safe-area-inset-top)+72px)] pb-[calc(env(safe-area-inset-bottom)+24px)]">
               <div className="flex-1 flex flex-col justify-center gap-4">
                 {navLinks.map((link, i) => (
                   <motion.div

@@ -12,13 +12,13 @@ interface BrandLogoProps {
 
 const sizeClasses: Record<LogoSize, { icon: string; text: string; gap: string }> = {
   sm: {
-    icon: 'h-7 w-auto',
-    text: 'text-[1rem]',
+    icon: 'h-6 w-auto',
+    text: 'text-[0.95rem]',
     gap: 'gap-2',
   },
   md: {
     icon: 'h-8 w-auto',
-    text: 'text-[1.15rem]',
+    text: 'text-[1.22rem]',
     gap: 'gap-2.5',
   },
   lg: {

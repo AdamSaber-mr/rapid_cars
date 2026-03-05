@@ -52,11 +52,11 @@ export function CarDetailPage() {
     <>
       <div className="min-h-screen bg-white" style={{ fontFamily: 'Inter, sans-serif' }}>
         {/* Back Navigation */}
-        <div className="fixed top-[72px] left-0 right-0 z-30 bg-white/95 backdrop-blur-md border-b border-black/5">
+        <div className="fixed top-[62px] lg:top-[72px] left-0 right-0 z-30 bg-white/95 backdrop-blur-md border-b border-black/5">
           <div className="max-w-[1440px] mx-auto px-6 lg:px-16">
             <Link
               to="/aanbod"
-              className="inline-flex items-center gap-2 py-3 text-[#4A4A4A] hover:text-[#0A0A0A] transition-colors duration-300"
+              className="inline-flex items-center gap-2 py-2.5 text-[#4A4A4A] hover:text-[#0A0A0A] transition-colors duration-300"
               style={{ fontSize: '13px', fontWeight: 500 }}
             >
               <ArrowLeft className="w-4 h-4" strokeWidth={1.5} />
@@ -66,7 +66,7 @@ export function CarDetailPage() {
         </div>
 
         {/* ==================== DESKTOP LAYOUT ==================== */}
-        <section className="hidden lg:block pt-[140px]">
+        <section className="hidden lg:block pt-[116px]">
           <div className="max-w-[1440px] mx-auto px-16">
             <div className="grid grid-cols-[1fr_360px] gap-14 xl:gap-16 items-stretch">
 
@@ -275,7 +275,7 @@ export function CarDetailPage() {
         </section>
 
         {/* ==================== MOBILE LAYOUT ==================== */}
-        <section className="lg:hidden pt-[112px]">
+        <section className="lg:hidden pt-[102px]">
           {/* Mobile Gallery - swipeable */}
           <div className="px-6">
             <motion.div

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <path d="M4 18L28 14H45L23 20L4 18Z" fill="#D12A2A"/>
+  <path d="M5 25L26 22H41L21 27L5 25Z" fill="#C42323"/>
+  <path d="M6 32L24 30H37L19 34L6 32Z" fill="#B51F1F"/>
+  <text x="23" y="52" font-size="44" font-style="italic" font-weight="900" font-family="Inter, Arial, sans-serif" fill="#121212">R</text>
+</svg>

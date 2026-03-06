@@ -6,15 +6,15 @@ export function Footer() {
     <footer className="bg-[#0A0A0A] text-white">
       <div className="max-w-[1440px] mx-auto px-6 lg:px-16">
         {/* Main Footer */}
-        <div className="py-12 lg:py-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
+        <div className="py-9 sm:py-12 lg:py-20 grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-8">
           {/* Brand */}
-          <div className="sm:col-span-2 lg:col-span-1">
+          <div className="col-span-2 lg:col-span-1">
             <Link to="/">
-              <BrandLogo tone="light" size="md" className="mb-6 sm:scale-110 sm:origin-left" />
+              <BrandLogo tone="light" size="md" className="mb-4 sm:mb-6 sm:scale-110 sm:origin-left" />
             </Link>
             <p
-              className="text-white/50 max-w-[320px]"
-              style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400, fontSize: '13px', lineHeight: 1.7 }}
+              className="text-white/50 max-w-[300px]"
+              style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400, fontSize: '12px', lineHeight: 1.6 }}
             >
               Premium autoverhuur voor wie sportief, snel en zonder gedoe wil rijden. Gevestigd in Nederland.
             </p>
@@ -23,12 +23,12 @@ export function Footer() {
           {/* Quick Links */}
           <div>
             <h4
-              className="text-[11px] tracking-[0.15em] uppercase text-white/40 mb-4 lg:mb-6"
+              className="text-[10px] tracking-[0.15em] uppercase text-white/40 mb-3 lg:mb-6"
               style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600 }}
             >
               Navigatie
             </h4>
-            <ul className="space-y-2 lg:space-y-3">
+            <ul className="space-y-1.5 lg:space-y-3">
               {[
                 { label: 'Home', href: '/' },
                 { label: 'Aanbod', href: '/aanbod' },
@@ -50,12 +50,12 @@ export function Footer() {
           {/* Contact */}
           <div>
             <h4
-              className="text-[11px] tracking-[0.15em] uppercase text-white/40 mb-4 lg:mb-6"
+              className="text-[10px] tracking-[0.15em] uppercase text-white/40 mb-3 lg:mb-6"
               style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600 }}
             >
               Contact
             </h4>
-            <ul className="space-y-2 lg:space-y-3">
+            <ul className="space-y-1.5 lg:space-y-3">
               <li>
                 <span
                   className="text-white/60"
@@ -84,14 +84,14 @@ export function Footer() {
           </div>
 
           {/* Opening Hours */}
-          <div className="sm:col-span-2 lg:col-span-1">
+          <div className="col-span-2 lg:col-span-1">
             <h4
-              className="text-[11px] tracking-[0.15em] uppercase text-white/40 mb-4 lg:mb-6"
+              className="text-[10px] tracking-[0.15em] uppercase text-white/40 mb-3 lg:mb-6"
               style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600 }}
             >
               Beschikbaarheid
             </h4>
-            <ul className="space-y-2 lg:space-y-3">
+            <ul className="space-y-1.5 lg:space-y-3">
               <li className="flex justify-between max-w-[200px] lg:max-w-none">
                 <span
                   className="text-white/60"
@@ -133,7 +133,7 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-white/10 py-6 lg:py-8 flex flex-col md:flex-row justify-between items-center gap-3 lg:gap-4">
+        <div className="border-t border-white/10 py-4 sm:py-6 lg:py-8 flex flex-col md:flex-row justify-between items-center gap-2.5 lg:gap-4">
           <p
             className="text-white/30"
             style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400, fontSize: '12px' }}

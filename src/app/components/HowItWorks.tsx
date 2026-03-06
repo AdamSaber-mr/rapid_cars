@@ -31,7 +31,7 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section id="hoe-het-werkt" className="bg-[#FAFAFA]">
+    <section id="hoe-het-werkt" className="bg-[#FAFAFA] scroll-mt-24">
       <div className="max-w-[1440px] mx-auto px-6 lg:px-16 py-16 sm:py-20 lg:py-32">
         {/* Section Header */}
         <div className="mb-12 lg:mb-20">

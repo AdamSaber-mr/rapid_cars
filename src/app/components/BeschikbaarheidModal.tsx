@@ -63,50 +63,51 @@ export function BeschikbaarheidModal({ car, isOpen, onClose }: BeschikbaarheidMo
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.97 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 z-[101] flex items-center justify-center px-4"
+            className="fixed inset-0 z-[101] flex items-center justify-center px-3 sm:px-4 py-3 sm:py-4 overflow-y-auto overflow-x-hidden"
           >
             <div
-              className="bg-white w-full max-w-[480px] relative"
+              className="relative w-full max-w-[460px]"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close button — half sticking out top-right */}
               <button
                 onClick={onClose}
-                className="absolute -top-4 -right-4 w-10 h-10 flex items-center justify-center bg-[#7A1C1C] rounded-full shadow-lg hover:bg-[#651717] transition-colors z-20"
+                className="absolute -top-3 -right-3 sm:-top-4 sm:-right-4 w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center bg-[#7A1C1C] rounded-full shadow-lg hover:bg-[#651717] transition-colors z-30"
                 aria-label="Sluiten"
               >
                 <X className="w-5 h-5 text-white" strokeWidth={2.5} />
               </button>
 
-              {/* Car Image Strip */}
-              <div className="relative h-[180px] overflow-hidden bg-[#F5F5F5]">
-                <img
-                  src={car.image}
-                  alt={car.name}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                <div className="absolute bottom-5 left-6">
-                  <p
-                    className="text-white/70 text-[11px] tracking-[0.15em] uppercase mb-1"
-                    style={{ fontFamily: 'Inter, sans-serif', fontWeight: 500 }}
-                  >
-                    Vraag beschikbaarheid
-                  </p>
-                  <h3
-                    className="text-white"
-                    style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: '22px', letterSpacing: '-0.02em' }}
-                  >
-                    {car.name}
-                  </h3>
+              <div className="bg-white rounded-xl sm:rounded-none max-h-[88svh] overflow-y-auto overflow-x-hidden">
+                {/* Car Image Strip */}
+                <div className="relative h-[140px] sm:h-[170px] overflow-hidden bg-[#F5F5F5]">
+                  <img
+                    src={car.image}
+                    alt={car.name}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                  <div className="absolute bottom-4 left-4 sm:bottom-5 sm:left-6">
+                    <p
+                      className="text-white/70 text-[10px] tracking-[0.15em] uppercase mb-1"
+                      style={{ fontFamily: 'Inter, sans-serif', fontWeight: 500 }}
+                    >
+                      Vraag beschikbaarheid
+                    </p>
+                    <h3
+                      className="text-white"
+                      style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: 'clamp(24px,6vw,36px)', letterSpacing: '-0.02em' }}
+                    >
+                      {car.name}
+                    </h3>
+                  </div>
                 </div>
-              </div>
 
-              {/* Content */}
-              <div className="p-6 lg:p-8">
+                {/* Content */}
+                <div className="p-4 sm:p-6 lg:p-8">
                 <p
-                  className="text-[#4A4A4A] mb-8"
-                  style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400, fontSize: '14px', lineHeight: 1.6 }}
+                  className="text-[#4A4A4A] mb-5 sm:mb-7"
+                  style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400, fontSize: '13px', lineHeight: 1.55 }}
                 >
                   Kies hoe je contact wilt opnemen. We reageren altijd binnen een paar uur.
                 </p>
@@ -116,20 +117,20 @@ export function BeschikbaarheidModal({ car, isOpen, onClose }: BeschikbaarheidMo
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-4 w-full bg-[#25D366] text-white px-6 py-4 mb-3 hover:bg-[#20BD5A] transition-colors duration-300"
+                  className="flex items-center gap-3.5 w-full bg-[#25D366] text-white px-5 py-3.5 mb-2.5 hover:bg-[#20BD5A] transition-colors duration-300"
                   style={{ fontFamily: 'Inter, sans-serif' }}
                 >
                   <MessageCircle className="w-5 h-5 flex-shrink-0" strokeWidth={1.5} />
                   <div className="flex-1">
                     <span
                       className="block text-white"
-                      style={{ fontWeight: 600, fontSize: '14px' }}
+                      style={{ fontWeight: 600, fontSize: '13px' }}
                     >
                       WhatsApp
                     </span>
                     <span
                       className="block text-white/80"
-                      style={{ fontWeight: 400, fontSize: '12px' }}
+                      style={{ fontWeight: 400, fontSize: '11px' }}
                     >
                       Snelste reactie — direct chatten
                     </span>
@@ -139,7 +140,7 @@ export function BeschikbaarheidModal({ car, isOpen, onClose }: BeschikbaarheidMo
                 {/* Snapchat — Secondary */}
                 <button
                   onClick={handleCopySnapchat}
-                  className="flex items-center gap-4 w-full bg-[#FFFC00] text-[#0A0A0A] px-6 py-4 mb-3 hover:bg-[#F5F200] transition-colors duration-300"
+                  className="flex items-center gap-3.5 w-full bg-[#FFFC00] text-[#0A0A0A] px-5 py-3.5 mb-2.5 hover:bg-[#F5F200] transition-colors duration-300"
                   style={{ fontFamily: 'Inter, sans-serif' }}
                 >
                   <svg className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
@@ -148,13 +149,13 @@ export function BeschikbaarheidModal({ car, isOpen, onClose }: BeschikbaarheidMo
                   <div className="flex-1 text-left">
                     <span
                       className="block"
-                      style={{ fontWeight: 600, fontSize: '14px' }}
+                      style={{ fontWeight: 600, fontSize: '13px' }}
                     >
                       Snapchat: rapidcarss
                     </span>
                     <span
                       className="block text-[#0A0A0A]/60"
-                      style={{ fontWeight: 400, fontSize: '12px' }}
+                      style={{ fontWeight: 400, fontSize: '11px' }}
                     >
                       {copied ? 'Gekopieerd!' : 'Klik om gebruikersnaam te kopieren'}
                     </span>
@@ -167,7 +168,7 @@ export function BeschikbaarheidModal({ car, isOpen, onClose }: BeschikbaarheidMo
                 </button>
 
                 {/* Divider */}
-                <div className="flex items-center gap-4 my-5">
+                <div className="flex items-center gap-4 my-4">
                   <div className="flex-1 h-px bg-[#E8E8E8]" />
                   <span
                     className="text-[#9A9A9A]"
@@ -181,7 +182,7 @@ export function BeschikbaarheidModal({ car, isOpen, onClose }: BeschikbaarheidMo
                 {/* Form route */}
                 <button
                   onClick={handleFormRoute}
-                  className="flex items-center gap-3 w-full text-left px-6 py-3.5 border border-[#E0E0E0] text-[#4A4A4A] hover:border-[#0A0A0A] hover:text-[#0A0A0A] transition-all duration-300"
+                  className="flex items-center gap-3 w-full text-left px-5 py-3 border border-[#E0E0E0] text-[#4A4A4A] hover:border-[#0A0A0A] hover:text-[#0A0A0A] transition-all duration-300"
                   style={{ fontFamily: 'Inter, sans-serif' }}
                 >
                   <FileText className="w-4 h-4 flex-shrink-0" strokeWidth={1.5} />
@@ -189,6 +190,7 @@ export function BeschikbaarheidModal({ car, isOpen, onClose }: BeschikbaarheidMo
                     Liever mailen? Vul het formulier in
                   </span>
                 </button>
+                </div>
               </div>
             </div>
           </motion.div>

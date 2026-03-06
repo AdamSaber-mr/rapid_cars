@@ -3,6 +3,14 @@ import { ArrowDown } from 'lucide-react';
 import { Link } from 'react-router';
 
 export function Hero() {
+  const scrollToHowItWorks = () => {
+    const section = document.getElementById('hoe-het-werkt');
+    if (!section) return;
+
+    const y = section.getBoundingClientRect().top + window.scrollY - 88;
+    window.scrollTo({ top: y, behavior: 'smooth' });
+  };
+
   return (
     <section className="relative h-screen w-full overflow-hidden">
       {/* Background Image */}
@@ -64,13 +72,14 @@ export function Hero() {
               >
                 Bekijk Aanbod
               </Link>
-              <a
-                href="#hoe-het-werkt"
+              <button
+                type="button"
+                onClick={scrollToHowItWorks}
                 className="inline-flex items-center justify-center border border-white/30 text-white px-10 py-4 text-[14px] tracking-[0.04em] uppercase hover:bg-white/10 transition-colors duration-300"
                 style={{ fontFamily: 'Inter, sans-serif', fontWeight: 500 }}
               >
                 Hoe Het Werkt
-              </a>
+              </button>
             </motion.div>
           </div>
         </div>

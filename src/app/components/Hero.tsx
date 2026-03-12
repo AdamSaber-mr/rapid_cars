@@ -41,7 +41,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.4 }}
-              className="text-[clamp(2.5rem,7vw,5.5rem)] text-white tracking-[-0.03em] mb-8"
+              className="text-[clamp(2.5rem,7vw,5.5rem)] lg:text-[65px] text-white tracking-[-0.03em] mb-8"
               style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600, lineHeight: 1.05 }}
             >
               Direct geregeld.

@@ -2,6 +2,7 @@ import { Outlet, useLocation } from 'react-router';
 import { useEffect } from 'react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
+import { ScrollToTopButton } from './ScrollToTopButton';
 
 export function Layout() {
   const { pathname } = useLocation();
@@ -14,6 +15,7 @@ export function Layout() {
     <div className="min-h-screen bg-white" style={{ fontFamily: 'Inter, sans-serif' }}>
       <Navbar />
       <Outlet />
+      <ScrollToTopButton />
       <Footer />
     </div>
   );

@@ -32,7 +32,6 @@ export function Navbar() {
 
   // On non-homepage, always show scrolled (solid) style
   const showSolid = scrolled || !isHomepage;
-
   const handleNavClick = (href: string) => {
     setMobileOpen(false);
     // Handle hash links on homepage

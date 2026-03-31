@@ -10,9 +10,9 @@ export function HomePage() {
     <>
       <Hero />
       <WhyRapidCars />
+      <MeestGevraagdeAutos />
       <HowItWorks />
       <Tussenbanner />
-      <MeestGevraagdeAutos />
       <FinalCTA />
     </>
   );

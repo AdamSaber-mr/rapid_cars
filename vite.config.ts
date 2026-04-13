@@ -4,8 +4,9 @@ import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
-  // GitHub Pages project site base path: /<repo-name>/
-  base: '/rapid_cars/',
+  // Vercel serves this app from the domain root.
+  // A repo-specific base path breaks JS/CSS asset URLs in production.
+  base: '/',
   plugins: [
     // The React and Tailwind plugins are both required for Make, even if
     // Tailwind is not being actively used – do not remove them

@@ -67,14 +67,14 @@ function StepConnector() {
     <>
       {/* Desktop: horizontal wave spanning the full gap */}
       <svg
-        viewBox="0 0 80 32"
+        viewBox="0 0 240 24"
         fill="none"
         preserveAspectRatio="none"
-        className="hidden h-8 w-full text-[#7A1C1C] sm:block"
+        className="hidden h-6 w-full text-[#7A1C1C] sm:block"
         aria-hidden
       >
         <motion.path
-          d="M0 16 C 13 4 27 28 40 16 S 67 4 80 16"
+          d="M0 12 Q 20 4 40 12 T 80 12 T 120 12 T 160 12 T 200 12 T 240 12"
           stroke="currentColor"
           strokeWidth={3}
           strokeLinecap="round"
@@ -85,14 +85,14 @@ function StepConnector() {
 
       {/* Mobile: vertical wave bridging the stacked cards */}
       <svg
-        viewBox="0 0 24 48"
+        viewBox="0 0 24 120"
         fill="none"
         preserveAspectRatio="none"
         className="block h-16 w-6 text-[#7A1C1C] sm:hidden"
         aria-hidden
       >
         <motion.path
-          d="M12 0 C 4 12 20 20 12 28 S 4 40 12 48"
+          d="M12 0 Q 4 20 12 40 T 12 80 T 12 120"
           stroke="currentColor"
           strokeWidth={3}
           strokeLinecap="round"
@@ -216,7 +216,7 @@ export function HowItWorks() {
                 {index < steps.length - 1 && (
                   <motion.div
                     variants={connectorWrap}
-                    className="flex shrink-0 items-center justify-center sm:w-24 lg:w-36"
+                    className="flex shrink-0 items-center justify-center sm:w-28 lg:w-40"
                     aria-hidden
                   >
                     <StepConnector />

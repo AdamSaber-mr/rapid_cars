@@ -5,6 +5,7 @@ import { ArrowRight, Gauge, Zap, Timer } from 'lucide-react';
 import { cars } from '../components/carData';
 import type { Car } from '../components/carData';
 import { BeschikbaarheidModal } from '../components/BeschikbaarheidModal';
+import { Reveal } from '../components/Reveal';
 
 export function AanbodPage() {
   const [selectedCar, setSelectedCar] = useState<Car | null>(null);
@@ -56,13 +57,12 @@ export function AanbodPage() {
           <div className="max-w-[1440px] mx-auto px-6 lg:px-16">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               {cars.map((car, index) => (
-                <motion.div
+                <Reveal
                   key={car.id}
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.08 }}
+                  delay={(index % 3) * 0.08}
                   className="group"
                 >
+                  <div className="transition-transform duration-500 ease-out group-hover:-translate-y-1.5">
                   {/* Image */}
                   <Link to={`/auto/${car.slug}`} className="block relative aspect-[4/3] overflow-hidden bg-[#F5F5F5] mb-5">
                     <img
@@ -137,7 +137,8 @@ export function AanbodPage() {
                     <span className="uppercase">Vraag beschikbaarheid</span>
                     <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
                   </button>
-                </motion.div>
+                  </div>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -146,7 +147,7 @@ export function AanbodPage() {
         {/* Bottom CTA */}
         <section className="bg-[#FAFAFA] border-t border-[#EBEBEB]">
           <div className="max-w-[1440px] mx-auto px-6 lg:px-16 py-16 lg:py-20">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <Reveal className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
               <div>
                 <p
                   className="text-[#0A0A0A] mb-1"
@@ -169,7 +170,7 @@ export function AanbodPage() {
                 Contact opnemen
                 <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
               </Link>
-            </div>
+            </Reveal>
           </div>
         </section>
       </div>

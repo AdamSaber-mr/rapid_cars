@@ -76,7 +76,7 @@ function StepConnector() {
         <motion.path
           d="M0 16 C 13 4 27 28 40 16 S 67 4 80 16"
           stroke="currentColor"
-          strokeWidth={2}
+          strokeWidth={3}
           strokeLinecap="round"
           vectorEffect="non-scaling-stroke"
           variants={connectorLine}
@@ -88,13 +88,13 @@ function StepConnector() {
         viewBox="0 0 24 48"
         fill="none"
         preserveAspectRatio="none"
-        className="block h-12 w-6 text-[#7A1C1C] sm:hidden"
+        className="block h-16 w-6 text-[#7A1C1C] sm:hidden"
         aria-hidden
       >
         <motion.path
           d="M12 0 C 4 12 20 20 12 28 S 4 40 12 48"
           stroke="currentColor"
-          strokeWidth={2}
+          strokeWidth={3}
           strokeLinecap="round"
           vectorEffect="non-scaling-stroke"
           variants={connectorLine}
@@ -216,7 +216,7 @@ export function HowItWorks() {
                 {index < steps.length - 1 && (
                   <motion.div
                     variants={connectorWrap}
-                    className="flex shrink-0 items-center justify-center sm:w-16 lg:w-24"
+                    className="flex shrink-0 items-center justify-center sm:w-24 lg:w-36"
                     aria-hidden
                   >
                     <StepConnector />

@@ -30,34 +30,35 @@ const steps = [
   },
 ];
 
-const EASE = [0.22, 1, 0.36, 1] as const;
+// Soft easeOutExpo-style curve for smooth, premium-feeling reveals.
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 // Reveal everything in source order — cards and the connectors between them —
 // so the whole process builds up from left to right (top to bottom on mobile).
 const stepsContainer = {
   hidden: {},
   show: {
-    transition: { staggerChildren: 0.18, delayChildren: 0.05 },
+    transition: { staggerChildren: 0.22, delayChildren: 0.1 },
   },
 };
 
 const stepCard = {
-  hidden: { opacity: 0, x: -26 },
+  hidden: { opacity: 0, x: -22 },
   show: {
     opacity: 1,
     x: 0,
-    transition: { duration: 0.55, ease: EASE },
+    transition: { duration: 0.9, ease: EASE },
   },
 };
 
 const connectorWrap = {
   hidden: { opacity: 0 },
-  show: { opacity: 1 },
+  show: { opacity: 1, transition: { duration: 0.6, ease: EASE } },
 };
 
 const connectorLine = {
   hidden: { pathLength: 0, opacity: 0 },
-  show: { pathLength: 1, opacity: 1, transition: { duration: 0.7, ease: EASE } },
+  show: { pathLength: 1, opacity: 1, transition: { duration: 1.1, ease: EASE } },
 };
 
 // Clean wavy line that bridges two steps edge to edge — horizontal between

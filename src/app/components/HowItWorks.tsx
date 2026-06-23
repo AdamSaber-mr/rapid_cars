@@ -29,6 +29,24 @@ const steps = [
   },
 ];
 
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+const stepsContainer = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.16, delayChildren: 0.05 },
+  },
+};
+
+const stepCard = {
+  hidden: { opacity: 0, y: 44 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: EASE },
+  },
+};
+
 export function HowItWorks() {
   return (
     <section id="hoe-het-werkt" className="bg-[#FAFAFA] scroll-mt-24">
@@ -80,86 +98,77 @@ export function HowItWorks() {
           </div>
         </div>
 
-        {/* Number Row - hidden on mobile, visible on sm+ */}
-        <div className="hidden sm:grid grid-cols-3 gap-3 sm:gap-4 lg:gap-6 mb-10 lg:mb-14">
-          {steps.map((step, index) => (
-            <motion.div
-              key={step.number + '-box'}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.08 }}
-              className="border border-[#D4D4D4] px-4 sm:px-5 py-3 sm:py-4 flex items-center justify-start"
-            >
-              <span
-                className="text-[#0A0A0A]"
-                style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: '20px', letterSpacing: '-0.01em' }}
-              >
-                {step.number}
-              </span>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Steps Content */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 lg:gap-8">
-          {steps.map((step, index) => {
+        {/* Steps - animated cards */}
+        <motion.div
+          variants={stepsContainer}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+          className="grid grid-cols-1 sm:grid-cols-3 gap-5 lg:gap-7"
+        >
+          {steps.map((step) => {
             const Icon = step.icon;
             return (
               <motion.div
                 key={step.number}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-40px' }}
-                transition={{ duration: 0.5, delay: 0.1 + index * 0.1 }}
-                className="flex flex-col rounded-2xl sm:rounded-none border border-[#EAEAEA] sm:border-0 p-5 sm:p-0 bg-white sm:bg-transparent"
+                variants={stepCard}
+                whileHover={{ y: -8 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+                className="group relative flex flex-col overflow-hidden bg-white border border-[#EAEAEA] p-7 lg:p-9"
               >
-                {/* Step number - visible on mobile only */}
-                <div className="sm:hidden mb-4">
-                  <div className="border border-[#D4D4D4] px-4 py-3 inline-block">
-                    <span
-                      className="text-[#0A0A0A]"
-                      style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: '20px', letterSpacing: '-0.01em' }}
-                    >
-                      {step.number}
-                    </span>
-                  </div>
+                {/* Oversized ghost number */}
+                <span
+                  className="pointer-events-none absolute -top-4 right-1 select-none leading-none text-[#7A1C1C]/[0.07] transition-colors duration-500 group-hover:text-[#7A1C1C]/[0.12]"
+                  style={{ fontFamily: 'Inter, sans-serif', fontWeight: 800, fontSize: 'clamp(5.5rem,8vw,8.5rem)', letterSpacing: '-0.04em' }}
+                >
+                  {step.number}
+                </span>
+
+                {/* Icon badge */}
+                <div className="relative mb-7 flex h-14 w-14 items-center justify-center rounded-full border border-[#DCC9C9] bg-[#FAF3F3] text-[#7A1C1C] transition-all duration-300 group-hover:scale-105 group-hover:border-[#7A1C1C] group-hover:bg-[#7A1C1C] group-hover:text-white">
+                  <Icon className="h-6 w-6" strokeWidth={1.6} />
                 </div>
 
-                {/* Icon */}
-                <div className="mb-5">
-                  <Icon className="w-5 h-5 text-[#9A9A9A]" strokeWidth={1.5} />
-                </div>
+                {/* Step label */}
+                <span
+                  className="relative mb-2.5 text-[12px] uppercase tracking-[0.18em] text-[#7A1C1C]"
+                  style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700 }}
+                >
+                  Stap {step.number}
+                </span>
 
                 {/* Title */}
                 <h3
-                  className="text-[#0A0A0A] mb-3 uppercase"
-                  style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: '15px', letterSpacing: '0.01em' }}
+                  className="relative mb-3.5 uppercase text-[#0A0A0A]"
+                  style={{ fontFamily: 'Inter, sans-serif', fontWeight: 800, fontSize: '20px', letterSpacing: '0.005em', lineHeight: 1.25 }}
                 >
                   {step.title}
                 </h3>
 
                 {/* Description */}
                 <p
-                  className="text-[#4A4A4A] mb-6 flex-1"
-                  style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400, fontSize: '14px', lineHeight: 1.65 }}
+                  className="relative mb-8 flex-1 text-[#3A3A3A]"
+                  style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400, fontSize: '16px', lineHeight: 1.7 }}
                 >
                   {step.description}
                 </p>
 
                 {/* Tag */}
-                <div className="mt-auto">
+                <div className="relative mt-auto">
                   <span
-                    className="inline-block border border-[#D4D4D4] px-3.5 py-1.5 text-[#4A4A4A] uppercase"
-                    style={{ fontFamily: 'Inter, sans-serif', fontWeight: 500, fontSize: '11px', letterSpacing: '0.06em' }}
+                    className="inline-block border border-[#D4D4D4] px-4 py-2 uppercase text-[#4A4A4A] transition-colors duration-300 group-hover:border-[#7A1C1C] group-hover:text-[#7A1C1C]"
+                    style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: '12px', letterSpacing: '0.06em' }}
                   >
                     {step.tag}
                   </span>
                 </div>
+
+                {/* Accent line grows on hover */}
+                <span className="absolute bottom-0 left-0 h-[3px] w-full origin-left scale-x-0 bg-[#7A1C1C] transition-transform duration-500 ease-out group-hover:scale-x-100" />
               </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
 
       {/* Bottom CTA Bar */}

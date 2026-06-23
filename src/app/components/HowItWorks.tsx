@@ -77,7 +77,7 @@ function StepConnector() {
         <motion.path
           d="M0 12 Q 30 4 60 12 T 120 12 T 180 12 T 240 12"
           stroke="currentColor"
-          strokeWidth={3}
+          strokeWidth={4}
           strokeLinecap="round"
           vectorEffect="non-scaling-stroke"
           variants={connectorLine}
@@ -95,7 +95,7 @@ function StepConnector() {
         <motion.path
           d="M12 0 Q 4 30 12 60 T 12 120"
           stroke="currentColor"
-          strokeWidth={3}
+          strokeWidth={4}
           strokeLinecap="round"
           vectorEffect="non-scaling-stroke"
           variants={connectorLine}

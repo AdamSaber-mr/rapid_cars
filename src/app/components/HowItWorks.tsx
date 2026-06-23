@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { motion } from 'motion/react';
 import { Search, CalendarDays, Car } from 'lucide-react';
 import { Link } from 'react-router';
@@ -31,21 +32,68 @@ const steps = [
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
+// Reveal everything in source order — cards and the connectors between them —
+// so the whole process builds up from left to right (top to bottom on mobile).
 const stepsContainer = {
   hidden: {},
   show: {
-    transition: { staggerChildren: 0.16, delayChildren: 0.05 },
+    transition: { staggerChildren: 0.18, delayChildren: 0.05 },
   },
 };
 
 const stepCard = {
-  hidden: { opacity: 0, y: 44 },
+  hidden: { opacity: 0, x: -26 },
   show: {
     opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: EASE },
+    x: 0,
+    transition: { duration: 0.55, ease: EASE },
   },
 };
+
+const connectorWrap = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1 },
+};
+
+const connectorLine = {
+  hidden: { pathLength: 0, opacity: 0 },
+  show: { pathLength: 1, opacity: 1, transition: { duration: 0.55, ease: EASE } },
+};
+
+const connectorHead = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { delay: 0.42, duration: 0.25 } },
+};
+
+// Clean wavy arrow that flows toward the next step. Rotated 90° on mobile so it
+// points down to the next stacked card.
+function StepConnector() {
+  return (
+    <svg
+      viewBox="0 0 64 40"
+      fill="none"
+      className="h-9 w-14 rotate-90 text-[#7A1C1C] sm:h-10 sm:w-16 sm:rotate-0"
+      aria-hidden
+    >
+      <motion.path
+        d="M3 20 C 15 6 23 34 34 20 S 49 8 55 20"
+        stroke="currentColor"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        variants={connectorLine}
+      />
+      <motion.path
+        d="M49 14 L56 20 L49 26"
+        stroke="currentColor"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        variants={connectorHead}
+      />
+    </svg>
+  );
+}
 
 export function HowItWorks() {
   return (
@@ -98,74 +146,74 @@ export function HowItWorks() {
           </div>
         </div>
 
-        {/* Steps - animated cards */}
+        {/* Steps - clean cards linked by a flowing arrow */}
         <motion.div
           variants={stepsContainer}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.2 }}
-          className="grid grid-cols-1 sm:grid-cols-3 gap-5 lg:gap-7"
+          className="flex flex-col sm:flex-row sm:items-stretch"
         >
-          {steps.map((step) => {
+          {steps.map((step, index) => {
             const Icon = step.icon;
             return (
-              <motion.div
-                key={step.number}
-                variants={stepCard}
-                whileHover={{ y: -8 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 22 }}
-                className="group relative flex flex-col overflow-hidden bg-white border border-[#EAEAEA] p-7 lg:p-9"
-              >
-                {/* Oversized ghost number */}
-                <span
-                  className="pointer-events-none absolute -top-4 right-1 select-none leading-none text-[#7A1C1C]/[0.07] transition-colors duration-500 group-hover:text-[#7A1C1C]/[0.12]"
-                  style={{ fontFamily: 'Inter, sans-serif', fontWeight: 800, fontSize: 'clamp(5.5rem,8vw,8.5rem)', letterSpacing: '-0.04em' }}
+              <Fragment key={step.number}>
+                <motion.div
+                  variants={stepCard}
+                  className="flex flex-1 flex-col rounded-2xl border border-[#EAEAEA] bg-white p-6 sm:rounded-none sm:border-0 sm:bg-transparent sm:p-1 lg:p-2"
                 >
-                  {step.number}
-                </span>
+                  {/* Step number */}
+                  <div className="mb-4 sm:mb-5">
+                    <span
+                      className="inline-block border border-[#D4D4D4] px-3.5 py-2 text-[#0A0A0A]"
+                      style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: '18px', letterSpacing: '-0.01em' }}
+                    >
+                      {step.number}
+                    </span>
+                  </div>
 
-                {/* Icon badge */}
-                <div className="relative mb-7 flex h-14 w-14 items-center justify-center rounded-full border border-[#DCC9C9] bg-[#FAF3F3] text-[#7A1C1C] transition-all duration-300 group-hover:scale-105 group-hover:border-[#7A1C1C] group-hover:bg-[#7A1C1C] group-hover:text-white">
-                  <Icon className="h-6 w-6" strokeWidth={1.6} />
-                </div>
+                  {/* Icon */}
+                  <div className="mb-5">
+                    <Icon className="h-6 w-6 text-[#9A9A9A]" strokeWidth={1.5} />
+                  </div>
 
-                {/* Step label */}
-                <span
-                  className="relative mb-2.5 text-[12px] uppercase tracking-[0.18em] text-[#7A1C1C]"
-                  style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700 }}
-                >
-                  Stap {step.number}
-                </span>
-
-                {/* Title */}
-                <h3
-                  className="relative mb-3.5 uppercase text-[#0A0A0A]"
-                  style={{ fontFamily: 'Inter, sans-serif', fontWeight: 800, fontSize: '20px', letterSpacing: '0.005em', lineHeight: 1.25 }}
-                >
-                  {step.title}
-                </h3>
-
-                {/* Description */}
-                <p
-                  className="relative mb-8 flex-1 text-[#3A3A3A]"
-                  style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400, fontSize: '16px', lineHeight: 1.7 }}
-                >
-                  {step.description}
-                </p>
-
-                {/* Tag */}
-                <div className="relative mt-auto">
-                  <span
-                    className="inline-block border border-[#D4D4D4] px-4 py-2 uppercase text-[#4A4A4A] transition-colors duration-300 group-hover:border-[#7A1C1C] group-hover:text-[#7A1C1C]"
-                    style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: '12px', letterSpacing: '0.06em' }}
+                  {/* Title */}
+                  <h3
+                    className="mb-3 uppercase text-[#0A0A0A]"
+                    style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: '18px', letterSpacing: '0.01em', lineHeight: 1.3 }}
                   >
-                    {step.tag}
-                  </span>
-                </div>
+                    {step.title}
+                  </h3>
 
-                {/* Accent line grows on hover */}
-                <span className="absolute bottom-0 left-0 h-[3px] w-full origin-left scale-x-0 bg-[#7A1C1C] transition-transform duration-500 ease-out group-hover:scale-x-100" />
-              </motion.div>
+                  {/* Description */}
+                  <p
+                    className="mb-6 flex-1 text-[#4A4A4A]"
+                    style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400, fontSize: '16px', lineHeight: 1.7 }}
+                  >
+                    {step.description}
+                  </p>
+
+                  {/* Tag */}
+                  <div className="mt-auto">
+                    <span
+                      className="inline-block border border-[#D4D4D4] px-3.5 py-1.5 uppercase text-[#4A4A4A]"
+                      style={{ fontFamily: 'Inter, sans-serif', fontWeight: 500, fontSize: '12px', letterSpacing: '0.06em' }}
+                    >
+                      {step.tag}
+                    </span>
+                  </div>
+                </motion.div>
+
+                {index < steps.length - 1 && (
+                  <motion.div
+                    variants={connectorWrap}
+                    className="flex items-center justify-center py-2 sm:py-0 sm:px-2 lg:px-4"
+                    aria-hidden
+                  >
+                    <StepConnector />
+                  </motion.div>
+                )}
+              </Fragment>
             );
           })}
         </motion.div>

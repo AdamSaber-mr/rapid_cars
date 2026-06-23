@@ -74,7 +74,7 @@ function StepConnector() {
         aria-hidden
       >
         <motion.path
-          d="M0 12 Q 20 4 40 12 T 80 12 T 120 12 T 160 12 T 200 12 T 240 12"
+          d="M0 12 Q 30 4 60 12 T 120 12 T 180 12 T 240 12"
           stroke="currentColor"
           strokeWidth={3}
           strokeLinecap="round"
@@ -92,7 +92,7 @@ function StepConnector() {
         aria-hidden
       >
         <motion.path
-          d="M12 0 Q 4 20 12 40 T 12 80 T 12 120"
+          d="M12 0 Q 4 30 12 60 T 12 120"
           stroke="currentColor"
           strokeWidth={3}
           strokeLinecap="round"

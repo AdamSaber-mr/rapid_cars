@@ -15,10 +15,16 @@ export function Hero() {
     <section className="relative h-screen w-full overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0">
-        <img
+        <motion.img
           src="https://images.unsplash.com/photo-1672024110512-f7028b49db28?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBzcG9ydHMlMjBjYXIlMjBkYXJrJTIwbW9vZHl8ZW58MXx8fHwxNzcxNTc4MzMxfDA&ixlib=rb-4.1.0&q=80&w=1080"
           alt="Sportwagen op donkere achtergrond"
           className="w-full h-full object-cover"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, scale: [1.08, 1.16] }}
+          transition={{
+            opacity: { duration: 1.4, ease: [0.22, 1, 0.36, 1] },
+            scale: { duration: 22, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' },
+          }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
       </div>

@@ -108,7 +108,7 @@ function StepConnector() {
 export function HowItWorks() {
   return (
     <section id="hoe-het-werkt" className="bg-[#FAFAFA] scroll-mt-24">
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-16 pt-16 pb-10 sm:pt-20 sm:pb-12 lg:pt-32 lg:pb-20">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-16 pt-12 pb-10 sm:pt-14 sm:pb-12 lg:pt-24 lg:pb-20">
         {/* Section Header */}
         <div className="mb-12 lg:mb-20">
           <motion.p

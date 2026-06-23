@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useParams, Link, Navigate } from 'react-router';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, Gauge, Zap, Timer, Settings, Check } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, Check } from 'lucide-react';
 import { cars } from '../components/carData';
 import { BeschikbaarheidModal } from '../components/BeschikbaarheidModal';
 

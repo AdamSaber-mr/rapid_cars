@@ -57,40 +57,50 @@ const connectorWrap = {
 
 const connectorLine = {
   hidden: { pathLength: 0, opacity: 0 },
-  show: { pathLength: 1, opacity: 1, transition: { duration: 0.55, ease: EASE } },
+  show: { pathLength: 1, opacity: 1, transition: { duration: 0.7, ease: EASE } },
 };
 
-const connectorHead = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { delay: 0.42, duration: 0.25 } },
-};
-
-// Clean straight arrow that flows toward the next step. Rotated 90° on mobile so
-// it points down to the next stacked card.
+// Clean wavy line that bridges two steps edge to edge — horizontal between
+// columns on desktop, vertical between stacked cards on mobile.
 function StepConnector() {
   return (
-    <svg
-      viewBox="0 0 56 24"
-      fill="none"
-      className="h-6 w-12 rotate-90 text-[#7A1C1C] sm:rotate-0"
-      aria-hidden
-    >
-      <motion.path
-        d="M4 12 L41 12"
-        stroke="currentColor"
-        strokeWidth={2}
-        strokeLinecap="round"
-        variants={connectorLine}
-      />
-      <motion.path
-        d="M35 5 L44 12 L35 19"
-        stroke="currentColor"
-        strokeWidth={2}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        variants={connectorHead}
-      />
-    </svg>
+    <>
+      {/* Desktop: horizontal wave spanning the full gap */}
+      <svg
+        viewBox="0 0 80 32"
+        fill="none"
+        preserveAspectRatio="none"
+        className="hidden h-8 w-full text-[#7A1C1C] sm:block"
+        aria-hidden
+      >
+        <motion.path
+          d="M0 16 C 13 4 27 28 40 16 S 67 4 80 16"
+          stroke="currentColor"
+          strokeWidth={2}
+          strokeLinecap="round"
+          vectorEffect="non-scaling-stroke"
+          variants={connectorLine}
+        />
+      </svg>
+
+      {/* Mobile: vertical wave bridging the stacked cards */}
+      <svg
+        viewBox="0 0 24 48"
+        fill="none"
+        preserveAspectRatio="none"
+        className="block h-12 w-6 text-[#7A1C1C] sm:hidden"
+        aria-hidden
+      >
+        <motion.path
+          d="M12 0 C 4 12 20 20 12 28 S 4 40 12 48"
+          stroke="currentColor"
+          strokeWidth={2}
+          strokeLinecap="round"
+          vectorEffect="non-scaling-stroke"
+          variants={connectorLine}
+        />
+      </svg>
+    </>
   );
 }
 
@@ -206,7 +216,7 @@ export function HowItWorks() {
                 {index < steps.length - 1 && (
                   <motion.div
                     variants={connectorWrap}
-                    className="flex items-center justify-center py-3 sm:py-0 sm:px-3 lg:px-5"
+                    className="flex shrink-0 items-center justify-center sm:w-16 lg:w-24"
                     aria-hidden
                   >
                     <StepConnector />

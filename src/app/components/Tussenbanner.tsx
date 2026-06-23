@@ -7,10 +7,13 @@ export function Tussenbanner() {
       <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[520px] lg:min-h-[600px]">
         {/* Image Side */}
         <div className="relative h-[400px] lg:h-auto overflow-hidden">
-          <img
+          <motion.img
             src="https://images.unsplash.com/photo-1690483707837-7c478da34968?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXIlMjByb2FkJTIwZHV0Y2glMjBoaWdod2F5JTIwZXZlbmluZ3xlbnwxfHx8fDE3NzE1NzgzMzd8MA&ixlib=rb-4.1.0&q=80&w=1080"
             alt="Sportwagen op de weg"
             className="w-full h-full object-cover"
+            initial={{ scale: 1.06 }}
+            animate={{ scale: [1.06, 1.14] }}
+            transition={{ duration: 20, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' }}
           />
           <div className="absolute inset-0 bg-black/20" />
         </div>

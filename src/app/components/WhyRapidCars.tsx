@@ -43,13 +43,13 @@ export function WhyRapidCars() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.7 }}
-            className="relative"
+            className="group relative"
           >
             <div className="aspect-[4/3] overflow-hidden">
               <img
                 src="https://images.unsplash.com/photo-1748343438203-cf652d0e3f86?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxBdWRpJTIwUlMlMjBiYWRnZSUyMGRldGFpbCUyMGNsb3NldXAlMjBjYXJib258ZW58MXx8fHwxNzcxNTc5ODE0fDA&ixlib=rb-4.1.0&q=80&w=1080"
                 alt="Audi RS detail"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
               />
             </div>
           </motion.div>

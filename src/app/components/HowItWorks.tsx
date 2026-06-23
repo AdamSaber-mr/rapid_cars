@@ -65,26 +65,25 @@ const connectorHead = {
   show: { opacity: 1, transition: { delay: 0.42, duration: 0.25 } },
 };
 
-// Clean wavy arrow that flows toward the next step. Rotated 90° on mobile so it
-// points down to the next stacked card.
+// Clean straight arrow that flows toward the next step. Rotated 90° on mobile so
+// it points down to the next stacked card.
 function StepConnector() {
   return (
     <svg
-      viewBox="0 0 64 40"
+      viewBox="0 0 56 24"
       fill="none"
-      className="h-9 w-14 rotate-90 text-[#7A1C1C] sm:h-10 sm:w-16 sm:rotate-0"
+      className="h-6 w-12 rotate-90 text-[#7A1C1C] sm:rotate-0"
       aria-hidden
     >
       <motion.path
-        d="M3 20 C 15 6 23 34 34 20 S 49 8 55 20"
+        d="M4 12 L41 12"
         stroke="currentColor"
         strokeWidth={2}
         strokeLinecap="round"
-        strokeLinejoin="round"
         variants={connectorLine}
       />
       <motion.path
-        d="M49 14 L56 20 L49 26"
+        d="M35 5 L44 12 L35 19"
         stroke="currentColor"
         strokeWidth={2}
         strokeLinecap="round"
@@ -160,7 +159,7 @@ export function HowItWorks() {
               <Fragment key={step.number}>
                 <motion.div
                   variants={stepCard}
-                  className="flex flex-1 flex-col rounded-2xl border border-[#EAEAEA] bg-white p-6 sm:rounded-none sm:border-0 sm:bg-transparent sm:p-1 lg:p-2"
+                  className="flex flex-1 flex-col rounded-2xl border border-[#ECECEC] bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.04)] lg:p-8"
                 >
                   {/* Step number */}
                   <div className="mb-4 sm:mb-5">
@@ -207,7 +206,7 @@ export function HowItWorks() {
                 {index < steps.length - 1 && (
                   <motion.div
                     variants={connectorWrap}
-                    className="flex items-center justify-center py-2 sm:py-0 sm:px-2 lg:px-4"
+                    className="flex items-center justify-center py-3 sm:py-0 sm:px-3 lg:px-5"
                     aria-hidden
                   >
                     <StepConnector />

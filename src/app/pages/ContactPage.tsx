@@ -104,8 +104,9 @@ export function ContactPage() {
             <div className="lg:col-span-5">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
               >
                 <h2
                   className="text-[#0A0A0A] mb-8"
@@ -119,7 +120,7 @@ export function ContactPage() {
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-4 w-full bg-[#25D366] text-white px-6 py-5 mb-4 hover:bg-[#20BD5A] transition-colors duration-300"
+                  className="flex items-center gap-4 w-full bg-[#25D366] text-white px-6 py-5 mb-4 hover:bg-[#20BD5A] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300"
                 >
                   <MessageCircle className="w-5 h-5 flex-shrink-0" strokeWidth={1.5} />
                   <div className="flex-1">
@@ -141,7 +142,7 @@ export function ContactPage() {
                 {/* Snapchat */}
                 <button
                   onClick={handleCopySnapchat}
-                  className="flex items-center gap-4 w-full bg-[#FFFC00] text-[#0A0A0A] px-6 py-5 mb-4 hover:bg-[#F5F200] transition-colors duration-300 text-left"
+                  className="flex items-center gap-4 w-full bg-[#FFFC00] text-[#0A0A0A] px-6 py-5 mb-4 hover:bg-[#F5F200] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 text-left"
                 >
                   <svg className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12.206.793c.99 0 4.347.276 5.93 3.821.529 1.193.403 3.219.299 4.847l-.003.06c-.012.18-.022.345-.03.51.075.045.203.09.401.09.3-.016.659-.12.922-.188.06-.016.12-.036.18-.06.18-.06.36-.09.51-.09.18 0 .36.06.48.12.18.12.3.27.36.48.09.21.06.48-.09.72-.06.12-.18.21-.33.33a4.86 4.86 0 0 1-.72.39 6.07 6.07 0 0 1-.84.27c-.12.03-.24.06-.33.09-.3.09-.39.18-.45.27.06.12.18.3.33.48.03.06.09.12.12.18.93 1.32 2.1 2.29 3.51 2.88.03.018.12.054.21.084.18.06.42.15.45.39.06.27-.15.51-.48.69-.69.33-1.56.57-2.4.66a.93.93 0 0 0-.21.06c-.09.06-.12.18-.15.36-.02.06-.03.12-.06.18-.09.27-.27.48-.72.48-.18 0-.39-.03-.63-.06a6.04 6.04 0 0 0-1.08-.12c-.36 0-.66.06-1.05.18-.48.18-1.02.48-1.71.84a6.5 6.5 0 0 1-2.88.78c-.06 0-.12 0-.18-.006h-.12a6.55 6.55 0 0 1-2.88-.78c-.69-.36-1.23-.66-1.74-.84-.36-.12-.69-.18-1.05-.18-.42 0-.78.06-1.08.12-.24.03-.45.06-.63.06-.42 0-.63-.18-.72-.48-.03-.06-.03-.12-.06-.18-.03-.18-.06-.3-.15-.36a.93.93 0 0 0-.21-.06c-.84-.09-1.74-.33-2.4-.66-.36-.18-.54-.42-.48-.69.03-.24.27-.33.45-.39.09-.03.18-.06.21-.084 1.41-.59 2.58-1.56 3.51-2.88.03-.06.09-.12.12-.18.15-.18.27-.36.33-.48-.06-.09-.15-.18-.45-.27a2.6 2.6 0 0 0-.33-.09c-.27-.06-.57-.15-.87-.27a5.62 5.62 0 0 1-.69-.39c-.15-.12-.27-.21-.33-.33-.15-.24-.18-.51-.09-.72.06-.21.18-.36.36-.48.12-.06.3-.12.48-.12.15 0 .33.03.51.09.06.024.12.04.18.06.27.06.63.18.93.18.18 0 .3-.03.39-.09-.006-.15-.018-.33-.03-.51l-.003-.06c-.104-1.628-.23-3.654.3-4.848C7.86 1.069 11.216.793 12.206.793Z" />
@@ -212,8 +213,9 @@ export function ContactPage() {
             <div className="lg:col-span-7">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
               >
                 <h2
                   className="text-[#0A0A0A] mb-8"

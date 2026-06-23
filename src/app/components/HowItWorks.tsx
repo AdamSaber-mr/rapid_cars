@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { motion } from 'motion/react';
 import { Search, CalendarDays, Car } from 'lucide-react';
 import { Link } from 'react-router';
@@ -49,10 +50,59 @@ const stepCard = {
   },
 };
 
+const connectorWrap = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1 },
+};
+
 const connectorLine = {
   hidden: { pathLength: 0, opacity: 0 },
-  show: { pathLength: 1, opacity: 1, transition: { duration: 1.2, ease: EASE, delay: 0.2 } },
+  show: { pathLength: 1, opacity: 1, transition: { duration: 0.7, ease: EASE } },
 };
+
+// Clean wavy line that bridges two steps edge to edge — horizontal between
+// columns on desktop, vertical between stacked cards on mobile.
+function StepConnector() {
+  return (
+    <>
+      {/* Desktop: horizontal wave spanning the full gap */}
+      <svg
+        viewBox="0 0 80 32"
+        fill="none"
+        preserveAspectRatio="none"
+        className="hidden h-8 w-full text-[#7A1C1C] sm:block"
+        aria-hidden
+      >
+        <motion.path
+          d="M0 16 C 13 4 27 28 40 16 S 67 4 80 16"
+          stroke="currentColor"
+          strokeWidth={2}
+          strokeLinecap="round"
+          vectorEffect="non-scaling-stroke"
+          variants={connectorLine}
+        />
+      </svg>
+
+      {/* Mobile: vertical wave bridging the stacked cards */}
+      <svg
+        viewBox="0 0 24 48"
+        fill="none"
+        preserveAspectRatio="none"
+        className="block h-12 w-6 text-[#7A1C1C] sm:hidden"
+        aria-hidden
+      >
+        <motion.path
+          d="M12 0 C 4 12 20 20 12 28 S 4 40 12 48"
+          stroke="currentColor"
+          strokeWidth={2}
+          strokeLinecap="round"
+          vectorEffect="non-scaling-stroke"
+          variants={connectorLine}
+        />
+      </svg>
+    </>
+  );
+}
 
 export function HowItWorks() {
   return (
@@ -105,57 +155,21 @@ export function HowItWorks() {
           </div>
         </div>
 
-        {/* Steps - clean cards linked by a continuous flowing line */}
+        {/* Steps - clean cards linked by a flowing arrow */}
         <motion.div
           variants={stepsContainer}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.2 }}
-          className="relative flex flex-col gap-8 sm:flex-row sm:items-stretch sm:gap-8 lg:gap-10"
+          className="flex flex-col sm:flex-row sm:items-stretch"
         >
-          {/* Desktop: one continuous wave behind the cards — only visible in the gaps */}
-          <svg
-            viewBox="0 0 1200 24"
-            fill="none"
-            preserveAspectRatio="none"
-            className="pointer-events-none absolute inset-x-0 top-1/2 hidden h-6 w-full -translate-y-1/2 text-[#7A1C1C] sm:block"
-            aria-hidden
-          >
-            <motion.path
-              d="M0 12 Q 50 7 100 12 T 200 12 T 300 12 T 400 12 T 500 12 T 600 12 T 700 12 T 800 12 T 900 12 T 1000 12 T 1100 12 T 1200 12"
-              stroke="currentColor"
-              strokeWidth={2}
-              strokeLinecap="round"
-              vectorEffect="non-scaling-stroke"
-              variants={connectorLine}
-            />
-          </svg>
-
-          {/* Mobile: one continuous vertical wave behind the stacked cards */}
-          <svg
-            viewBox="0 0 24 1200"
-            fill="none"
-            preserveAspectRatio="none"
-            className="pointer-events-none absolute inset-y-0 left-1/2 block h-full w-6 -translate-x-1/2 text-[#7A1C1C] sm:hidden"
-            aria-hidden
-          >
-            <motion.path
-              d="M12 0 Q 7 50 12 100 T 12 200 T 12 300 T 12 400 T 12 500 T 12 600 T 12 700 T 12 800 T 12 900 T 12 1000 T 12 1100 T 12 1200"
-              stroke="currentColor"
-              strokeWidth={2}
-              strokeLinecap="round"
-              vectorEffect="non-scaling-stroke"
-              variants={connectorLine}
-            />
-          </svg>
-
-          {steps.map((step) => {
+          {steps.map((step, index) => {
             const Icon = step.icon;
             return (
+              <Fragment key={step.number}>
                 <motion.div
-                  key={step.number}
                   variants={stepCard}
-                  className="relative z-10 flex flex-1 flex-col rounded-2xl border border-[#ECECEC] bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.04)] lg:p-8"
+                  className="flex flex-1 flex-col rounded-2xl border border-[#ECECEC] bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.04)] lg:p-8"
                 >
                   {/* Step number */}
                   <div className="mb-4 sm:mb-5">
@@ -198,6 +212,17 @@ export function HowItWorks() {
                     </span>
                   </div>
                 </motion.div>
+
+                {index < steps.length - 1 && (
+                  <motion.div
+                    variants={connectorWrap}
+                    className="flex shrink-0 items-center justify-center sm:w-16 lg:w-24"
+                    aria-hidden
+                  >
+                    <StepConnector />
+                  </motion.div>
+                )}
+              </Fragment>
             );
           })}
         </motion.div>

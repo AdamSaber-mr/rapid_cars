@@ -1,5 +1,6 @@
 import { Link } from 'react-router';
 import { BrandLogo } from './BrandLogo';
+import { Reveal } from './Reveal';
 
 export function Footer() {
   return (
@@ -8,7 +9,7 @@ export function Footer() {
         {/* Main Footer */}
         <div className="py-9 sm:py-12 lg:py-20 grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-8">
           {/* Brand */}
-          <div className="col-span-2 lg:col-span-1">
+          <Reveal delay={0} className="col-span-2 lg:col-span-1">
             <Link to="/">
               <BrandLogo tone="light" size="md" className="mb-4 sm:mb-6 sm:scale-110 sm:origin-left" />
             </Link>
@@ -18,10 +19,10 @@ export function Footer() {
             >
               Premium autoverhuur voor wie sportief, snel en zonder gedoe wil rijden. Gevestigd in Nederland.
             </p>
-          </div>
+          </Reveal>
 
           {/* Quick Links */}
-          <div>
+          <Reveal delay={0.08}>
             <h4
               className="text-[10px] tracking-[0.15em] uppercase text-white/40 mb-3 lg:mb-6"
               style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600 }}
@@ -45,10 +46,10 @@ export function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </Reveal>
 
           {/* Contact */}
-          <div>
+          <Reveal delay={0.16}>
             <h4
               className="text-[10px] tracking-[0.15em] uppercase text-white/40 mb-3 lg:mb-6"
               style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600 }}
@@ -81,10 +82,10 @@ export function Footer() {
                 </span>
               </li>
             </ul>
-          </div>
+          </Reveal>
 
           {/* Opening Hours */}
-          <div className="col-span-2 lg:col-span-1">
+          <Reveal delay={0.24} className="col-span-2 lg:col-span-1">
             <h4
               className="text-[10px] tracking-[0.15em] uppercase text-white/40 mb-3 lg:mb-6"
               style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600 }}
@@ -129,11 +130,11 @@ export function Footer() {
                 </span>
               </li>
             </ul>
-          </div>
+          </Reveal>
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-white/10 py-4 sm:py-6 lg:py-8 flex flex-col md:flex-row justify-between items-center gap-2.5 lg:gap-4">
+        <Reveal amount={0.6} className="border-t border-white/10 py-4 sm:py-6 lg:py-8 flex flex-col md:flex-row justify-between items-center gap-2.5 lg:gap-4">
           <p
             className="text-white/30"
             style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400, fontSize: '12px' }}
@@ -156,7 +157,7 @@ export function Footer() {
               Algemene Voorwaarden
             </a>
           </div>
-        </div>
+        </Reveal>
       </div>
     </footer>
   );

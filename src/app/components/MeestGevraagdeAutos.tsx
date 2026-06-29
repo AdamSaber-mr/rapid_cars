@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import {
+  ArrowRight,
   CarFront,
-  ChevronLeft,
-  ChevronRight,
   MapPin,
   UserRound,
   Wallet,
@@ -205,6 +204,35 @@ const mobileCardVariants = {
   }),
 };
 
+const EASE_OUT = [0.22, 1, 0.36, 1] as const;
+
+const headerContainer = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.12, delayChildren: 0.05 },
+  },
+};
+
+const revealUp = {
+  hidden: { opacity: 0, y: 26 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: EASE_OUT },
+  },
+};
+
+const gridCardReveal = {
+  hidden: { opacity: 0, y: 52, scale: 0.96, rotateX: 12, filter: 'blur(8px)' },
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    rotateX: 0,
+    filter: 'blur(0px)',
+  },
+};
+
 function StatItem({
   icon: Icon,
   label,
@@ -216,12 +244,18 @@ function StatItem({
 }) {
   return (
     <div className="flex items-start gap-2.5 lg:gap-3">
-      <Icon className="mt-0.5 h-4 w-4 text-[#B96363] lg:h-[15px] lg:w-[15px]" strokeWidth={1.8} />
+      <Icon className="mt-0.5 h-4 w-4 text-[#C25450] lg:h-[15px] lg:w-[15px]" strokeWidth={1.8} />
       <div>
-        <p className="text-[12px] uppercase tracking-[0.18em] text-white/32 lg:text-[11px] lg:tracking-[0.22em]">
+        <p
+          className="text-[11px] uppercase tracking-[0.18em] text-white/40 lg:text-[11px] lg:tracking-[0.2em]"
+          style={{ fontFamily: 'Inter, sans-serif', fontWeight: 500 }}
+        >
           {label}
         </p>
-        <p className="text-[15px] font-semibold leading-[1.25] text-white/88 lg:mt-1 lg:text-[18px] lg:leading-[1.2]">
+        <p
+          className="text-[14px] leading-[1.25] text-white/90 lg:mt-0.5 lg:text-[15px] lg:leading-[1.2]"
+          style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600 }}
+        >
           {value}
         </p>
       </div>
@@ -231,18 +265,18 @@ function StatItem({
 
 function ShowcaseCard({ item }: { item: ShowcaseCar }) {
   const cardContent = (
-    <article className="relative flex h-full min-h-[620px] flex-col overflow-hidden rounded-[18px] border border-white/8 bg-[#2F2B28] shadow-[0_28px_90px_rgba(0,0,0,0.4)] lg:min-h-[735px] xl:min-h-[770px]">
+    <article className="relative flex h-full min-h-[500px] flex-col overflow-hidden rounded-2xl bg-[#272727] shadow-[0_10px_40px_rgba(0,0,0,0.35)] lg:min-h-[575px] xl:min-h-[600px]">
       <div className="relative aspect-[1.46/1] overflow-hidden bg-[#151515] lg:aspect-[1.68/1]">
         <img
           src={item.image}
           alt={item.title}
-          className={`h-full w-full object-cover transition-transform duration-700 ${
-            item.isPlaceholder ? 'opacity-55 saturate-[0.8]' : 'group-hover:scale-[1.04]'
+          className={`h-full w-full object-cover transition-transform duration-[900ms] ease-out ${
+            item.isPlaceholder ? 'opacity-60 saturate-[0.8]' : 'group-hover:scale-[1.07]'
           }`}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/48 via-black/8 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent opacity-70" />
         <div
-          className="absolute bottom-4 right-4 z-10 bg-[#B96363] px-4 py-2 text-[12px] font-semibold text-white lg:px-5 lg:py-2.5 lg:text-[14px]"
+          className="absolute bottom-4 right-4 z-10 bg-[#7A1C1C] px-4 py-2 text-[12px] font-semibold text-white shadow-[0_6px_18px_rgba(0,0,0,0.4)] lg:px-5 lg:py-2.5 lg:text-[14px]"
           style={{
             clipPath: 'polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%)',
           }}
@@ -251,45 +285,51 @@ function ShowcaseCard({ item }: { item: ShowcaseCar }) {
         </div>
       </div>
 
-      <div className="flex flex-1 flex-col px-6 pb-6 pt-5 lg:px-9 lg:pb-9 lg:pt-8">
-        <div className="mb-6 lg:mb-6">
+      <div className="flex flex-1 flex-col px-5 pb-5 pt-4 lg:px-7 lg:pb-7 lg:pt-6">
+        <div className="mb-4 lg:mb-5">
           <h3
-            className="mb-1.5 text-[clamp(1.85rem,2vw,2.35rem)] tracking-[-0.04em] text-white lg:mb-2 lg:text-[2.15rem]"
-            style={{ fontWeight: 700, lineHeight: 1.04 }}
+            className="mb-1.5 text-[clamp(1.5rem,1.7vw,1.85rem)] tracking-[-0.03em] text-white lg:mb-1.5 lg:text-[1.7rem]"
+            style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, lineHeight: 1.1 }}
           >
             {item.title}
           </h3>
-          <p className="text-[1.02rem] leading-[1.55] text-white/68 lg:max-w-[24ch] lg:text-[15px] lg:leading-[1.45]">
+          <span className="mb-2.5 block h-[2px] w-9 rounded-full bg-[#C25450]" />
+          <p
+            className="text-[0.95rem] leading-[1.55] text-white/60 lg:max-w-[26ch] lg:text-[14px] lg:leading-[1.5]"
+            style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}
+          >
             {item.subtitle}
           </p>
         </div>
 
-        <div className="mb-6 border-b border-white/12 pb-6 lg:mb-8 lg:pb-8">
+        <div className="mb-5 border-b border-white/10 pb-5 lg:mb-6 lg:pb-6">
           <span
-            className="text-[2rem] tracking-[-0.05em] text-white lg:text-[2.25rem]"
-            style={{ fontWeight: 700, lineHeight: 1 }}
+            className="inline-block text-[1.65rem] tracking-[-0.04em] text-white lg:text-[1.85rem]"
+            style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, lineHeight: 1 }}
           >
             {item.price}
           </span>
-          <span className="ml-1.5 text-[1.05rem] text-white/74 lg:text-[1.2rem]">/ Dag</span>
+          <span className="ml-1.5 text-[0.95rem] text-white/50 lg:text-[1.05rem]">/ Dag</span>
         </div>
 
-        <div className="grid grid-cols-2 gap-x-4 gap-y-5 lg:gap-x-7 lg:gap-y-7">
+        <div className="grid grid-cols-2 gap-x-4 gap-y-4 lg:gap-x-6 lg:gap-y-5">
           <StatItem icon={MapPin} label="Locatie" value={item.city} />
           <StatItem icon={Wallet} label="Borg" value={item.deposit} />
           <StatItem icon={CarFront} label="Kenteken" value={item.plate} />
           <StatItem icon={UserRound} label="Leeftijd" value={item.age} />
         </div>
 
-        <div className="mt-auto pt-5 lg:pt-7">
+        <div className="mt-auto pt-4 lg:pt-5">
           <div
-            className={`flex w-full items-center justify-center rounded-[14px] px-5 py-3.5 text-[13px] font-semibold uppercase tracking-[0.14em] transition-colors duration-300 lg:py-4 lg:text-[14px] ${
+            className={`relative flex w-full items-center justify-center gap-2 overflow-hidden px-5 py-3.5 text-[12px] font-semibold uppercase tracking-[0.08em] lg:py-4 ${
               item.isPlaceholder
-                ? 'border border-white/10 bg-white/5 text-white/42'
-                : 'bg-[#A84242] text-white group-hover:bg-[#933737]'
+                ? 'border border-white/15 bg-transparent text-white/40'
+                : 'bg-[#7A1C1C] text-white'
             }`}
+            style={{ fontFamily: 'Inter, sans-serif' }}
           >
-            {item.actionLabel}
+            <span>{item.actionLabel}</span>
+            {!item.isPlaceholder && <ArrowRight className="w-4" strokeWidth={2.2} />}
           </div>
         </div>
       </div>
@@ -317,6 +357,8 @@ function ShowcaseCard({ item }: { item: ShowcaseCar }) {
 export function MeestGevraagdeAutos() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(1);
+  const [inView, setInView] = useState(false);
+  const [hasRevealed, setHasRevealed] = useState(false);
 
   const desktopVisibleCars = getVisibleCars(activeIndex, 3);
   const activeMobileCar = showcaseCars[activeIndex];
@@ -335,66 +377,59 @@ export function MeestGevraagdeAutos() {
   return (
     <section
       id="aanbod"
-      className="relative overflow-hidden bg-black py-24 text-white sm:py-30 lg:py-36"
+      className="relative overflow-hidden bg-[#1E1E1E] py-16 text-white sm:py-20 lg:py-28"
       style={{ fontFamily: SECTION_FONT }}
     >
       <div className="relative mx-auto max-w-[1700px] px-4 sm:px-6 lg:px-16">
         <motion.div
-          initial={{ opacity: 0, y: 22 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial="hidden"
+          whileInView="show"
           viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.45 }}
-          className="mb-10 text-center lg:mb-20"
+          variants={headerContainer}
+          className="mb-12 text-center lg:mb-20"
         >
-          <p
-            className="mb-2 text-center text-[16px] leading-none text-white lg:mb-3 lg:text-[1.25rem]"
-            style={{ fontWeight: 500 }}
+          <motion.h2
+            variants={revealUp}
+            className="text-[clamp(2.5rem,6vw,4.5rem)] tracking-[-0.03em] text-white"
+            style={{ fontFamily: 'Inter, sans-serif', fontWeight: 800, lineHeight: 1.0 }}
           >
-            Bekijk deze auto&apos;s
-          </p>
-          <h2
-            className="text-center text-[22px] text-white sm:text-[3rem] lg:text-[4.35rem] xl:text-[4.7rem]"
-            style={{ fontWeight: 800, lineHeight: 0.96, letterSpacing: '1px' }}
-          >
-            Trending Auto&apos;s
-          </h2>
+            Trending <span className="text-[#C25450]/60">Auto&apos;s</span>
+          </motion.h2>
         </motion.div>
 
-        <div className="relative hidden lg:block lg:mt-6">
-          <button
-            onClick={() => paginate(-1)}
-            className="absolute left-[-82px] top-1/2 z-20 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full border border-white/12 bg-black/55 text-white/70 transition-all duration-300 hover:border-[#A84242] hover:bg-[#A84242] hover:text-white xl:left-[-102px]"
-            aria-label="Vorige auto's"
-          >
-            <ChevronLeft className="h-5 w-5" strokeWidth={1.8} />
-          </button>
-
-          <button
-            onClick={() => paginate(1)}
-            className="absolute right-[-82px] top-1/2 z-20 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full border border-white/12 bg-black/55 text-white/70 transition-all duration-300 hover:border-[#A84242] hover:bg-[#A84242] hover:text-white xl:right-[-102px]"
-            aria-label="Volgende auto's"
-          >
-            <ChevronRight className="h-5 w-5" strokeWidth={1.8} />
-          </button>
-
+        <motion.div
+          className="relative hidden lg:block lg:mt-6"
+          onViewportEnter={() => setInView(true)}
+          viewport={{ once: true, amount: 0.2 }}
+        >
           <div className="mx-auto max-w-[1560px] overflow-hidden px-2">
             <div className="grid grid-cols-3 gap-8 xl:gap-10">
               <AnimatePresence initial={false} custom={direction} mode="popLayout">
-                {desktopVisibleCars.map((item) => (
+                {desktopVisibleCars.map((item, index) => (
                   <motion.div
                     key={item.id}
                     layout
                     custom={direction}
-                    variants={desktopCardVariants}
-                    initial="enter"
-                    animate="center"
+                    style={{ transformPerspective: 1200 }}
+                    variants={hasRevealed ? desktopCardVariants : gridCardReveal}
+                    initial={hasRevealed ? 'enter' : 'hidden'}
+                    animate={hasRevealed ? 'center' : inView ? 'show' : 'hidden'}
                     exit="exit"
-                    transition={{
-                      layout: { type: 'spring', stiffness: 220, damping: 28 },
-                      x: { type: 'spring', stiffness: 210, damping: 28 },
-                      opacity: { duration: 0.24 },
-                      scale: { duration: 0.28 },
+                    onAnimationComplete={() => {
+                      if (!hasRevealed && inView && index === desktopVisibleCars.length - 1) {
+                        setHasRevealed(true);
+                      }
                     }}
+                    transition={
+                      hasRevealed
+                        ? {
+                            layout: { type: 'spring', stiffness: 220, damping: 28 },
+                            x: { type: 'spring', stiffness: 210, damping: 28 },
+                            opacity: { duration: 0.24 },
+                            scale: { duration: 0.28 },
+                          }
+                        : { duration: 0.85, ease: EASE_OUT, delay: index * 0.15 }
+                    }
                   >
                     <ShowcaseCard item={item} />
                   </motion.div>
@@ -402,11 +437,17 @@ export function MeestGevraagdeAutos() {
               </AnimatePresence>
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="lg:hidden">
+        <motion.div
+          className="lg:hidden"
+          initial={{ opacity: 0, y: 32 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6, ease: EASE_OUT }}
+        >
           <div className="mx-auto flex max-w-[404px] justify-center">
-            <div className="relative min-h-[670px] w-full">
+            <div className="relative min-h-[530px] w-full">
               <AnimatePresence initial={false} custom={direction} mode="sync">
                 <motion.div
                   key={activeMobileCar.id}
@@ -439,20 +480,26 @@ export function MeestGevraagdeAutos() {
               </AnimatePresence>
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="mt-6 flex items-center justify-center gap-2.5 lg:mt-9">
+        <motion.div
+          className="mt-6 flex items-center justify-center gap-2.5 lg:mt-9"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.5, ease: EASE_OUT, delay: 0.1 }}
+        >
           {showcaseCars.map((item, index) => (
             <button
               key={item.id}
               onClick={() => jumpToIndex(index)}
               className={`h-2.5 rounded-full transition-all duration-300 ${
-                index === activeIndex ? 'w-7 bg-[#B96363]' : 'w-2.5 bg-white/22 hover:bg-white/38'
+                index === activeIndex ? 'w-7 bg-[#C25450]' : 'w-2.5 bg-white/25 hover:bg-white/45'
               }`}
               aria-label={`Ga naar auto ${index + 1}`}
             />
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -6,17 +6,6 @@ export function FinalCTA() {
     <section className="py-32 lg:py-40 bg-white">
       <div className="max-w-[1440px] mx-auto px-6 lg:px-16">
         <div className="max-w-[720px] mx-auto text-center">
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-[12px] tracking-[0.2em] uppercase text-[#7A1C1C] mb-6"
-            style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600 }}
-          >
-            Aan De Slag
-          </motion.p>
-
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}

@@ -111,17 +111,6 @@ export function HowItWorks() {
       <div className="max-w-[1440px] mx-auto px-6 lg:px-16 pt-12 pb-10 sm:pt-14 sm:pb-12 lg:pt-24 lg:pb-20">
         {/* Section Header */}
         <div className="mb-12 lg:mb-20">
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-[12px] tracking-[0.2em] uppercase text-[#7A1C1C] mb-5"
-            style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600 }}
-          >
-            Werkwijze
-          </motion.p>
-
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
             <motion.div
               initial={{ opacity: 0, y: 24 }}

@@ -62,7 +62,7 @@ export function WhyRapidCars() {
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               className="text-[clamp(2rem,4.5vw,3.25rem)] text-[#0A0A0A] tracking-[-0.025em] mb-6"
-              style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, lineHeight: 1.1 }}
+              style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600, lineHeight: 1.1 }}
             >
               Niet zomaar een
               <br />

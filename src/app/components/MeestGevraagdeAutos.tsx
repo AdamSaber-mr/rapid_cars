@@ -390,8 +390,8 @@ export function MeestGevraagdeAutos() {
         >
           <motion.h2
             variants={revealUp}
-            className="text-[clamp(2.5rem,6vw,4.5rem)] tracking-[-0.03em] text-white"
-            style={{ fontFamily: 'Inter, sans-serif', fontWeight: 800, lineHeight: 1.0 }}
+            className="text-[clamp(2rem,5vw,3.75rem)] tracking-[-0.03em] text-white"
+            style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600, lineHeight: 1.0 }}
           >
             Trending <span className="text-[#C25450]/60">Auto&apos;s</span>
           </motion.h2>

@@ -120,13 +120,13 @@ export function HowItWorks() {
             >
               <h2
                 className="text-[clamp(2.5rem,6vw,4.5rem)] text-[#0A0A0A] tracking-[-0.03em]"
-                style={{ fontFamily: 'Inter, sans-serif', fontWeight: 800, lineHeight: 1.0 }}
+                style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600, lineHeight: 1.0 }}
               >
                 In 3 stappen
               </h2>
               <h2
                 className="text-[clamp(2.5rem,6vw,4.5rem)] text-[#7A1C1C]/30 tracking-[-0.03em]"
-                style={{ fontFamily: 'Inter, sans-serif', fontWeight: 800, lineHeight: 1.0 }}
+                style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600, lineHeight: 1.0 }}
               >
                 onderweg.
               </h2>

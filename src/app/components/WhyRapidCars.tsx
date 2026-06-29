@@ -35,14 +35,14 @@ export function WhyRapidCars() {
   return (
     <section id="waarom" className="bg-white">
       {/* Main Content */}
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-16 py-16 sm:py-20 lg:py-32">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-24 items-center">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-16 pt-16 sm:pt-20 lg:pt-32 pb-10 sm:pb-12 lg:pb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.12fr_1fr] gap-10 lg:gap-20 items-center">
           {/* Left — Image */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, x: -40, scale: 0.98 }}
+            whileInView={{ opacity: 1, x: 0, scale: 1 }}
             viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             className="group relative"
           >
             <div className="aspect-[4/3] overflow-hidden">
@@ -60,7 +60,7 @@ export function WhyRapidCars() {
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               className="text-[clamp(2rem,4.5vw,3.25rem)] text-[#0A0A0A] tracking-[-0.025em] mb-6"
               style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, lineHeight: 1.1 }}
             >
@@ -73,7 +73,7 @@ export function WhyRapidCars() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 0.5, delay: 0.1 }}
+              transition={{ duration: 0.6, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
               className="text-[#4A4A4A] mb-10 max-w-[520px]"
               style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400, fontSize: '15px', lineHeight: 1.75 }}
             >
@@ -83,25 +83,25 @@ export function WhyRapidCars() {
             </motion.p>
 
             {/* USPs */}
-            <div className="space-y-5">
+            <div className="space-y-6">
               {usps.map((usp, index) => {
                 const Icon = usp.icon;
                 return (
                   <motion.div
                     key={usp.title}
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, x: -16 }}
+                    whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true, margin: '-40px' }}
-                    transition={{ duration: 0.4, delay: 0.15 + index * 0.08 }}
-                    className="flex items-center gap-4"
+                    transition={{ duration: 0.55, delay: 0.2 + index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                    className="group/usp flex items-center gap-4"
                   >
-                    <div className="flex-shrink-0 w-12 h-12 rounded-full border border-[#D4D4D4] flex items-center justify-center">
-                      <Icon className="w-[18px] h-[18px] text-[#0A0A0A]" strokeWidth={1.5} />
+                    <div className="flex-shrink-0 w-14 h-14 rounded-full border border-[#D4D4D4] flex items-center justify-center transition-colors duration-300 group-hover/usp:border-[#0A0A0A]">
+                      <Icon className="w-5 h-5 text-[#0A0A0A] transition-transform duration-300 group-hover/usp:scale-110" strokeWidth={1.5} />
                     </div>
                     <div>
                       <span
                         className="text-[#0A0A0A] block"
-                        style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: '15px', lineHeight: 1.3 }}
+                        style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: '16px', lineHeight: 1.3 }}
                       >
                         {usp.title}
                       </span>
@@ -127,10 +127,10 @@ export function WhyRapidCars() {
             {stats.map((stat, index) => (
               <motion.div
                 key={stat.label}
-                initial={{ opacity: 0, y: 16 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.45, delay: index * 0.08 }}
+                transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
                 className={`text-center ${
                   index > 0 ? 'lg:border-l lg:border-[#EBEBEB]' : ''
                 }`}

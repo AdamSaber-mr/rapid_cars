@@ -3,7 +3,7 @@ import { WhyRapidCars } from '../components/WhyRapidCars';
 import { HowItWorks } from '../components/HowItWorks';
 import { Tussenbanner } from '../components/Tussenbanner';
 import { MeestGevraagdeAutos } from '../components/MeestGevraagdeAutos';
-import { FinalCTA } from '../components/FinalCTA';
+import { Testimonials } from '../components/Testimonials';
 
 export function HomePage() {
   return (
@@ -12,8 +12,8 @@ export function HomePage() {
       <WhyRapidCars />
       <MeestGevraagdeAutos />
       <HowItWorks />
+      <Testimonials />
       <Tussenbanner />
-      <FinalCTA />
     </>
   );
 }

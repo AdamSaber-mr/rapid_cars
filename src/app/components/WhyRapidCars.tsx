@@ -33,7 +33,7 @@ const stats = [
 
 export function WhyRapidCars() {
   return (
-    <section id="waarom" className="bg-white">
+    <section id="waarom" className="bg-[#FAFAFA]">
       {/* Main Content */}
       <div className="max-w-[1440px] mx-auto px-6 lg:px-16 pt-16 sm:pt-20 lg:pt-32 pb-10 sm:pb-12 lg:pb-16">
         <div className="grid grid-cols-1 lg:grid-cols-[1.12fr_1fr] gap-10 lg:gap-20 items-center">
@@ -122,8 +122,8 @@ export function WhyRapidCars() {
 
       {/* Stats Strip — visually separated */}
       <div className="border-t border-[#EBEBEB]">
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-16 py-16 lg:py-20">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-0">
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-16 py-10 lg:py-12">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-0">
             {stats.map((stat, index) => (
               <motion.div
                 key={stat.label}
@@ -136,13 +136,13 @@ export function WhyRapidCars() {
                 }`}
               >
                 <div
-                  className="text-[clamp(2.25rem,5vw,3.5rem)] text-[#0A0A0A] mb-1.5"
+                  className="text-[clamp(1.5rem,3.5vw,2.25rem)] text-[#0A0A0A] mb-1"
                   style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, letterSpacing: '-0.03em' }}
                 >
                   {stat.value}
                 </div>
                 <div
-                  className="text-[12px] text-[#4A4A4A] tracking-[0.15em] uppercase"
+                  className="text-[11px] text-[#4A4A4A] tracking-[0.15em] uppercase"
                   style={{ fontFamily: 'Inter, sans-serif', fontWeight: 500 }}
                 >
                   {stat.label}

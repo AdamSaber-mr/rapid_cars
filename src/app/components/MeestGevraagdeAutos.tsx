@@ -1,336 +1,109 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import {
-  ArrowRight,
-  CarFront,
-  MapPin,
-  UserRound,
-  Wallet,
-} from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router';
 import { cars } from './carData';
 import type { Car } from './carData';
 
-const SECTION_FONT = 'Outfit, Inter, sans-serif';
+const SECTION_FONT = 'Inter, sans-serif';
+const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 
 interface ShowcaseCar {
   id: string;
-  badge: string;
   title: string;
-  subtitle: string;
   image: string;
   price: string;
-  city: string;
-  deposit: string;
-  age: string;
-  plate: string;
-  actionLabel: string;
+  category: string;
   car?: Car;
   isPlaceholder?: boolean;
 }
 
-const realCarMeta: Record<string, Omit<ShowcaseCar, 'id' | 'title' | 'subtitle' | 'image' | 'car'>> = {
-  'volkswagen-golf-r': {
-    badge: 'Nederlands kenteken',
-    price: '€325,00',
-    city: 'Amsterdam',
-    deposit: '€1500',
-    age: '21+',
-    plate: 'Nederlands kenteken',
-    actionLabel: 'Boek nu',
-  },
-  'volkswagen-golf-gti': {
-    badge: 'Nederlands kenteken',
-    price: '€245,00',
-    city: 'Amsterdam',
-    deposit: '€1000',
-    age: '21+',
-    plate: 'Nederlands kenteken',
-    actionLabel: 'Boek nu',
-  },
-  'audi-rs3-sedan': {
-    badge: 'Nederlands kenteken',
-    price: '€425,00',
-    city: 'Amsterdam',
-    deposit: '€2000',
-    age: '23+',
-    plate: 'Nederlands kenteken',
-    actionLabel: 'Boek nu',
-  },
+const priceBySlug: Record<string, string> = {
+  'volkswagen-golf-r': '€325',
+  'volkswagen-golf-gti': '€245',
+  'audi-rs3-sedan': '€425',
 };
 
 const placeholderConfigs = [
-  {
-    title: 'Nieuwe performance auto',
-    subtitle: 'Binnenkort live in onze collectie.',
-    price: '€295,00',
-    city: 'Rotterdam',
-    deposit: '€1500',
-    age: '21+',
-    plate: 'Nederlands kenteken',
-    badge: 'Binnenkort',
-  },
-  {
-    title: 'Nieuwe weekend special',
-    subtitle: 'Nog even wachten, deze komt eraan.',
-    price: '€275,00',
-    city: 'Utrecht',
-    deposit: '€1000',
-    age: '21+',
-    plate: 'Nederlands kenteken',
-    badge: 'Binnenkort',
-  },
-  {
-    title: 'Nieuwe signature drop',
-    subtitle: 'Volgende toevoeging voor de homepage.',
-    price: '€365,00',
-    city: 'Amsterdam',
-    deposit: '€2000',
-    age: '23+',
-    plate: 'Nederlands kenteken',
-    badge: 'Binnenkort',
-  },
-  {
-    title: 'Nieuwe hot hatch',
-    subtitle: 'Extra snelle hatchback volgt snel.',
-    price: '€255,00',
-    city: 'Den Haag',
-    deposit: '€1000',
-    age: '21+',
-    plate: 'Kilometervrij',
-    badge: 'Kilometervrij',
-  },
-  {
-    title: 'Nieuwe premium sedan',
-    subtitle: 'Performance met een strakke look.',
-    price: '€395,00',
-    city: 'Amsterdam',
-    deposit: '€2000',
-    age: '23+',
-    plate: 'Nederlands kenteken',
-    badge: 'Binnenkort',
-  },
-  {
-    title: 'Nieuwe track-ready optie',
-    subtitle: 'Meer beleving, meer vermogen, meer stijl.',
-    price: '€445,00',
-    city: 'Eindhoven',
-    deposit: '€2500',
-    age: '25+',
-    plate: 'Nederlands kenteken',
-    badge: 'Binnenkort',
-  },
-  {
-    title: 'Nieuwe daily sport',
-    subtitle: 'Sportief genoeg voor elke dag.',
-    price: '€225,00',
-    city: 'Rotterdam',
-    deposit: '€1000',
-    age: '21+',
-    plate: 'Kilometervrij',
-    badge: 'Kilometervrij',
-  },
+  { title: 'Nieuwe performance auto', price: '€295' },
+  { title: 'Nieuwe weekend special', price: '€275' },
+  { title: 'Nieuwe signature drop', price: '€365' },
+  { title: 'Nieuwe hot hatch', price: '€255' },
+  { title: 'Nieuwe premium sedan', price: '€395' },
+  { title: 'Nieuwe track-ready optie', price: '€445' },
+  { title: 'Nieuwe daily sport', price: '€225' },
 ];
 
 const showcaseCars: ShowcaseCar[] = [
   ...cars.map((car) => ({
     id: car.slug,
     title: car.name,
-    subtitle: car.tagline,
     image: car.image,
+    price: priceBySlug[car.slug] ?? '€295',
+    category: car.category,
     car,
-    ...realCarMeta[car.slug],
   })),
   ...placeholderConfigs.map((item, index) => ({
     id: `placeholder-${index + 1}`,
     title: item.title,
-    subtitle: item.subtitle,
     image: cars[index % cars.length].image,
     price: item.price,
-    city: item.city,
-    deposit: item.deposit,
-    age: item.age,
-    plate: item.plate,
-    badge: item.badge,
-    actionLabel: 'Binnenkort beschikbaar',
+    category: 'Binnenkort',
     isPlaceholder: true,
   })),
 ];
 
-const wrapIndex = (value: number, total: number) => {
-  if (value < 0) {
-    return (value % total + total) % total;
-  }
-
-  return value % total;
-};
-
-const getVisibleCars = (startIndex: number, count: number) =>
-  Array.from({ length: count }, (_, offset) => showcaseCars[wrapIndex(startIndex + offset, showcaseCars.length)]);
-
-const desktopCardVariants = {
-  enter: (direction: number) => ({
-    opacity: 0,
-    x: direction > 0 ? 90 : -90,
-    scale: 0.985,
-  }),
-  center: {
-    opacity: 1,
-    x: 0,
-    scale: 1,
-  },
-  exit: (direction: number) => ({
-    opacity: 0,
-    x: direction > 0 ? -90 : 90,
-    scale: 0.985,
-  }),
-};
-
-const mobileCardVariants = {
-  enter: (direction: number) => ({
-    opacity: 0,
-    x: direction > 0 ? 72 : -72,
-    scale: 0.99,
-  }),
-  center: {
-    opacity: 1,
-    x: 0,
-    scale: 1,
-  },
-  exit: (direction: number) => ({
-    opacity: 0,
-    x: direction > 0 ? -72 : 72,
-    scale: 0.99,
-  }),
-};
-
-const EASE_OUT = [0.22, 1, 0.36, 1] as const;
-
-const headerContainer = {
-  hidden: {},
-  show: {
-    transition: { staggerChildren: 0.12, delayChildren: 0.05 },
-  },
-};
-
-const revealUp = {
-  hidden: { opacity: 0, y: 26 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: EASE_OUT },
-  },
-};
-
-const gridCardReveal = {
-  hidden: { opacity: 0, y: 52, scale: 0.96, rotateX: 12, filter: 'blur(8px)' },
-  show: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    rotateX: 0,
-    filter: 'blur(0px)',
-  },
-};
-
-function StatItem({
-  icon: Icon,
-  label,
-  value,
-}: {
-  icon: typeof MapPin;
-  label: string;
-  value: string;
-}) {
-  return (
-    <div className="flex items-start gap-2.5 lg:gap-3">
-      <Icon className="mt-0.5 h-4 w-4 text-[#C25450] lg:h-[15px] lg:w-[15px]" strokeWidth={1.8} />
-      <div>
-        <p
-          className="text-[11px] uppercase tracking-[0.18em] text-white/40 lg:text-[11px] lg:tracking-[0.2em]"
-          style={{ fontFamily: 'Inter, sans-serif', fontWeight: 500 }}
-        >
-          {label}
-        </p>
-        <p
-          className="text-[14px] leading-[1.25] text-white/90 lg:mt-0.5 lg:text-[15px] lg:leading-[1.2]"
-          style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600 }}
-        >
-          {value}
-        </p>
-      </div>
-    </div>
-  );
-}
-
 function ShowcaseCard({ item }: { item: ShowcaseCar }) {
-  const cardContent = (
-    <article className="relative flex h-full min-h-[500px] flex-col overflow-hidden rounded-2xl bg-[#272727] shadow-[0_10px_40px_rgba(0,0,0,0.35)] lg:min-h-[575px] xl:min-h-[600px]">
-      <div className="relative aspect-[1.46/1] overflow-hidden bg-[#151515] lg:aspect-[1.68/1]">
+  const content = (
+    <article className="group/card flex h-full flex-col overflow-hidden rounded-2xl border border-[#333333] bg-[#242424] transition-colors duration-300 hover:border-[#454545]">
+      <div className="relative aspect-[1/1] overflow-hidden bg-[#2A2A2A]">
         <img
           src={item.image}
           alt={item.title}
           className={`h-full w-full object-cover transition-transform duration-[900ms] ease-out ${
-            item.isPlaceholder ? 'opacity-60 saturate-[0.8]' : 'group-hover:scale-[1.07]'
+            item.isPlaceholder ? 'opacity-70 saturate-[0.85]' : 'group-hover/card:scale-[1.06]'
           }`}
         />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent opacity-70" />
-        <div
-          className="absolute bottom-4 right-4 z-10 bg-[#7A1C1C] px-4 py-2 text-[12px] font-semibold text-white shadow-[0_6px_18px_rgba(0,0,0,0.4)] lg:px-5 lg:py-2.5 lg:text-[14px]"
-          style={{
-            clipPath: 'polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%)',
-          }}
-        >
-          {item.badge}
-        </div>
+        {item.isPlaceholder && (
+          <span
+            className="absolute left-3 top-3 rounded-full border border-white/10 bg-black/50 px-2.5 py-1 text-[10px] uppercase tracking-[0.14em] text-[#C5C5C5] backdrop-blur"
+            style={{ fontWeight: 600 }}
+          >
+            Binnenkort
+          </span>
+        )}
       </div>
 
-      <div className="flex flex-1 flex-col px-5 pb-5 pt-4 lg:px-7 lg:pb-7 lg:pt-6">
-        <div className="mb-4 lg:mb-5">
+      <div className="flex items-start justify-between gap-3 px-4 py-3.5 lg:px-5 lg:py-4">
+        <div className="min-w-0">
           <h3
-            className="mb-1.5 text-[clamp(1.5rem,1.7vw,1.85rem)] tracking-[-0.03em] text-white lg:mb-1.5 lg:text-[1.7rem]"
-            style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, lineHeight: 1.1 }}
+            className="truncate text-[15px] text-white lg:text-[16px]"
+            style={{ fontWeight: 600, letterSpacing: '-0.01em' }}
           >
             {item.title}
           </h3>
-          <span className="mb-2.5 block h-[2px] w-9 rounded-full bg-[#C25450]" />
-          <p
-            className="text-[0.95rem] leading-[1.55] text-white/60 lg:max-w-[26ch] lg:text-[14px] lg:leading-[1.5]"
-            style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400 }}
-          >
-            {item.subtitle}
-          </p>
+          <p className="mt-0.5 text-[12px] text-[#8A8A8A] lg:text-[12.5px]">{item.category}</p>
         </div>
-
-        <div className="mb-5 border-b border-white/10 pb-5 lg:mb-6 lg:pb-6">
-          <span
-            className="inline-block text-[1.65rem] tracking-[-0.04em] text-white lg:text-[1.85rem]"
-            style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, lineHeight: 1 }}
-          >
+        <div className="shrink-0 text-right">
+          <span className="text-[15px] text-white lg:text-[16px]" style={{ fontWeight: 600 }}>
             {item.price}
           </span>
-          <span className="ml-1.5 text-[0.95rem] text-white/50 lg:text-[1.05rem]">/ Dag</span>
+          <span className="block text-[10.5px] text-[#7E7E7E]">per dag</span>
         </div>
+      </div>
 
-        <div className="grid grid-cols-2 gap-x-4 gap-y-4 lg:gap-x-6 lg:gap-y-5">
-          <StatItem icon={MapPin} label="Locatie" value={item.city} />
-          <StatItem icon={Wallet} label="Borg" value={item.deposit} />
-          <StatItem icon={CarFront} label="Kenteken" value={item.plate} />
-          <StatItem icon={UserRound} label="Leeftijd" value={item.age} />
-        </div>
-
-        <div className="mt-auto pt-4 lg:pt-5">
-          <div
-            className={`relative flex w-full items-center justify-center gap-2 overflow-hidden px-5 py-3.5 text-[12px] font-semibold uppercase tracking-[0.08em] lg:py-4 ${
-              item.isPlaceholder
-                ? 'border border-white/15 bg-transparent text-white/40'
-                : 'bg-[#7A1C1C] text-white'
-            }`}
-            style={{ fontFamily: 'Inter, sans-serif' }}
+      <div className="mt-auto px-4 pb-4 lg:px-5 lg:pb-5">
+        <div className="flex items-center justify-between gap-2 bg-[#7A1C1C] px-4 py-3.5 text-white transition-colors duration-300 group-hover/card:bg-[#651717]">
+          <span
+            className="text-[13px] uppercase tracking-[0.08em]"
+            style={{ fontWeight: 600 }}
           >
-            <span>{item.actionLabel}</span>
-            {!item.isPlaceholder && <ArrowRight className="w-4" strokeWidth={2.2} />}
-          </div>
+            Bekijk detailpagina
+          </span>
+          <ArrowRight
+            className="h-4 w-4 transition-transform duration-300 group-hover/card:translate-x-1"
+            strokeWidth={1.8}
+          />
         </div>
       </div>
     </article>
@@ -338,167 +111,144 @@ function ShowcaseCard({ item }: { item: ShowcaseCar }) {
 
   if (item.car) {
     return (
-      <Link
-        to={`/auto/${item.car.slug}`}
-        className="group block h-full cursor-pointer"
-      >
-        {cardContent}
+      <Link to={`/auto/${item.car.slug}`} className="block h-full cursor-pointer">
+        {content}
       </Link>
     );
   }
 
-  return (
-    <div className="group block h-full cursor-default">
-      {cardContent}
-    </div>
-  );
+  return <div className="block h-full cursor-default">{content}</div>;
 }
 
 export function MeestGevraagdeAutos() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [direction, setDirection] = useState(1);
-  const [inView, setInView] = useState(false);
-  const [hasRevealed, setHasRevealed] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [canLeft, setCanLeft] = useState(false);
+  const [canRight, setCanRight] = useState(true);
 
-  const desktopVisibleCars = getVisibleCars(activeIndex, 3);
-  const activeMobileCar = showcaseCars[activeIndex];
-
-  const paginate = (nextDirection: number) => {
-    setDirection(nextDirection);
-    setActiveIndex((current) => wrapIndex(current + nextDirection, showcaseCars.length));
+  const updateArrows = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const { scrollLeft, scrollWidth, clientWidth } = el;
+    setCanLeft(scrollLeft > 8);
+    setCanRight(scrollLeft < scrollWidth - clientWidth - 8);
   };
 
-  const jumpToIndex = (index: number) => {
-    if (index === activeIndex) return;
-    setDirection(index > activeIndex ? 1 : -1);
-    setActiveIndex(index);
+  useEffect(() => {
+    updateArrows();
+    const el = scrollRef.current;
+    if (!el) return;
+    el.addEventListener('scroll', updateArrows, { passive: true });
+    window.addEventListener('resize', updateArrows);
+    return () => {
+      el.removeEventListener('scroll', updateArrows);
+      window.removeEventListener('resize', updateArrows);
+    };
+  }, []);
+
+  const scrollByCard = (direction: number) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const first = el.firstElementChild as HTMLElement | null;
+    const amount = first ? first.getBoundingClientRect().width + 20 : el.clientWidth * 0.8;
+    el.scrollBy({ left: direction * amount, behavior: 'smooth' });
   };
+
+  const arrowClasses =
+    'absolute top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[#3A3A3A] bg-[#2A2A2A] text-white shadow-[0_6px_20px_rgba(0,0,0,0.5)] transition-colors duration-200 hover:border-white hover:bg-white hover:text-[#0A0A0A] lg:h-12 lg:w-12';
 
   return (
     <section
       id="aanbod"
-      className="relative overflow-hidden bg-[#1E1E1E] py-16 text-white sm:py-20 lg:py-28"
+      className="scroll-mt-24 border-t border-[#262626] bg-[#181818] py-20 sm:py-24 lg:py-32"
       style={{ fontFamily: SECTION_FONT }}
     >
-      <div className="relative mx-auto max-w-[1700px] px-4 sm:px-6 lg:px-16">
+      <div className="mx-auto max-w-[1440px] px-6 lg:px-16">
         <motion.div
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.3 }}
-          variants={headerContainer}
-          className="mb-12 text-center lg:mb-20"
-        >
-          <motion.h2
-            variants={revealUp}
-            className="text-[clamp(2rem,5vw,3.75rem)] tracking-[-0.03em] text-white"
-            style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600, lineHeight: 1.0 }}
-          >
-            Trending <span className="text-[#C25450]/60">Auto&apos;s</span>
-          </motion.h2>
-        </motion.div>
-
-        <motion.div
-          className="relative hidden lg:block lg:mt-6"
-          onViewportEnter={() => setInView(true)}
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          <div className="mx-auto max-w-[1560px] overflow-hidden px-2">
-            <div className="grid grid-cols-3 gap-8 xl:gap-10">
-              <AnimatePresence initial={false} custom={direction} mode="popLayout">
-                {desktopVisibleCars.map((item, index) => (
-                  <motion.div
-                    key={item.id}
-                    layout
-                    custom={direction}
-                    style={{ transformPerspective: 1200 }}
-                    variants={hasRevealed ? desktopCardVariants : gridCardReveal}
-                    initial={hasRevealed ? 'enter' : 'hidden'}
-                    animate={hasRevealed ? 'center' : inView ? 'show' : 'hidden'}
-                    exit="exit"
-                    onAnimationComplete={() => {
-                      if (!hasRevealed && inView && index === desktopVisibleCars.length - 1) {
-                        setHasRevealed(true);
-                      }
-                    }}
-                    transition={
-                      hasRevealed
-                        ? {
-                            layout: { type: 'spring', stiffness: 220, damping: 28 },
-                            x: { type: 'spring', stiffness: 210, damping: 28 },
-                            opacity: { duration: 0.24 },
-                            scale: { duration: 0.28 },
-                          }
-                        : { duration: 0.85, ease: EASE_OUT, delay: index * 0.15 }
-                    }
-                  >
-                    <ShowcaseCard item={item} />
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            </div>
-          </div>
-        </motion.div>
-
-        <motion.div
-          className="lg:hidden"
-          initial={{ opacity: 0, y: 32 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.6, ease: EASE_OUT }}
+          className="mb-8 flex items-end justify-between gap-6 lg:mb-10"
         >
-          <div className="mx-auto flex max-w-[404px] justify-center">
-            <div className="relative min-h-[530px] w-full">
-              <AnimatePresence initial={false} custom={direction} mode="sync">
-                <motion.div
-                  key={activeMobileCar.id}
-                  custom={direction}
-                  variants={mobileCardVariants}
-                  initial="enter"
-                  animate="center"
-                  exit="exit"
-                  transition={{
-                    x: { type: 'spring', stiffness: 210, damping: 27 },
-                    opacity: { duration: 0.2 },
-                    scale: { duration: 0.22 },
-                  }}
-                  className="absolute inset-0"
-                  drag="x"
-                  dragDirectionLock
-                  dragConstraints={{ left: 0, right: 0 }}
-                  dragElastic={0.1}
-                  onDragEnd={(_, info) => {
-                    if (info.offset.x <= -42 || info.velocity.x <= -260) {
-                      paginate(1);
-                    } else if (info.offset.x >= 42 || info.velocity.x >= 260) {
-                      paginate(-1);
-                    }
-                  }}
-                  style={{ touchAction: 'pan-y' }}
-                >
-                  <ShowcaseCard item={activeMobileCar} />
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </div>
+          <h2
+            className="text-[clamp(1.75rem,3.5vw,2.75rem)] tracking-[-0.025em] text-white"
+            style={{ fontWeight: 600, lineHeight: 1.1 }}
+          >
+            Trending <span className="text-white">Auto&apos;s</span>
+          </h2>
+          <Link
+            to="/aanbod"
+            className="hidden shrink-0 items-center gap-1.5 text-[14px] text-[#9A9A9A] transition-colors hover:text-white sm:inline-flex"
+            style={{ fontWeight: 500 }}
+          >
+            Bekijk alles
+            <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
+          </Link>
         </motion.div>
 
         <motion.div
-          className="mt-6 flex items-center justify-center gap-2.5 lg:mt-9"
-          initial={{ opacity: 0, y: 16 }}
+          className="relative"
+          initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.5, ease: EASE_OUT, delay: 0.1 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.7, ease: EASE_OUT, delay: 0.05 }}
         >
-          {showcaseCars.map((item, index) => (
-            <button
-              key={item.id}
-              onClick={() => jumpToIndex(index)}
-              className={`h-2.5 rounded-full transition-all duration-300 ${
-                index === activeIndex ? 'w-7 bg-[#C25450]' : 'w-2.5 bg-white/25 hover:bg-white/45'
-              }`}
-              aria-label={`Ga naar auto ${index + 1}`}
-            />
-          ))}
+          <div
+            ref={scrollRef}
+            className="flex snap-x snap-mandatory gap-5 overflow-x-auto overflow-y-hidden pt-2 pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {showcaseCars.map((item, index) => (
+              <motion.div
+                key={item.id}
+                className="w-[82%] shrink-0 snap-start sm:w-[47%] lg:w-[31.5%]"
+                initial={{ opacity: 0, y: 32, scale: 0.97 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{
+                  duration: 0.6,
+                  ease: EASE_OUT,
+                  delay: (index % 3) * 0.12,
+                }}
+                whileHover={{ y: -6, transition: { duration: 0.3, ease: EASE_OUT } }}
+              >
+                <ShowcaseCard item={item} />
+              </motion.div>
+            ))}
+          </div>
+
+          <AnimatePresence>
+            {canLeft && (
+              <motion.button
+                key="left"
+                initial={{ opacity: 0, scale: 0.85 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.85 }}
+                transition={{ duration: 0.2, ease: EASE_OUT }}
+                onClick={() => scrollByCard(-1)}
+                className={`${arrowClasses} left-3`}
+                aria-label="Vorige auto's"
+              >
+                <ArrowLeft className="h-5 w-5" strokeWidth={1.8} />
+              </motion.button>
+            )}
+          </AnimatePresence>
+
+          <AnimatePresence>
+            {canRight && (
+              <motion.button
+                key="right"
+                initial={{ opacity: 0, scale: 0.85 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.85 }}
+                transition={{ duration: 0.2, ease: EASE_OUT }}
+                onClick={() => scrollByCard(1)}
+                className={`${arrowClasses} right-3`}
+                aria-label="Volgende auto's"
+              >
+                <ArrowRight className="h-5 w-5" strokeWidth={1.8} />
+              </motion.button>
+            )}
+          </AnimatePresence>
         </motion.div>
       </div>
     </section>

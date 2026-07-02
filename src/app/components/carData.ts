@@ -23,7 +23,10 @@ export interface Car {
   drivetrainShort: string;
   acceleration: string;
   transmission: string;
+  topSpeed: string;
+  fuel: string;
   whyText: string;
+  description: string[];
   features: string[];
   rentalText: string;
   image: string;
@@ -45,7 +48,13 @@ export const cars: Car[] = [
     drivetrainShort: '4Motion',
     acceleration: '0-100 in 4.7s',
     transmission: 'Automaat (DSG)',
+    topSpeed: '250 km/u (begrensd)',
+    fuel: 'Benzine',
     whyText: 'Perfect als je een sportieve hatchback wil die snel is en overal grip heeft.',
+    description: [
+      'De Golf R is de meest complete allrounder in ons aanbod. Met 320 pk, 4Motion vierwielaandrijving en launch control sprint je in 4.7 seconden naar de honderd — en dankzij de enorme grip voelt dat elke keer weer even solide.',
+      'Door de DSG-automaat en de voorspelbare wegligging is de Golf R ook voor minder ervaren rijders goed te doen. Instappen, rijmodus kiezen en gaan: deze auto maakt van elke rit een moment.',
+    ],
     features: ['Sportstoelen (R)', 'Apple CarPlay / Android Auto', 'Cruise control', 'Parkeersensoren'],
     rentalText: 'Beschikbaarheid wisselt. Stuur ons een bericht en we reageren snel.',
     image: golfRImage,
@@ -70,7 +79,13 @@ export const cars: Car[] = [
     drivetrainShort: 'FWD',
     acceleration: '0-100 in 6.2s',
     transmission: 'Automaat (DSG)',
+    topSpeed: '250 km/u',
+    fuel: 'Benzine',
     whyText: 'De perfecte mix van fun, sport en comfort — ideaal voor city & weekend.',
+    description: [
+      'De Golf GTI is dé klassieker onder de hot hatches, en deze generatie is scherper dan ooit. 245 pk op de voorwielen, een strak sportonderstel en dat typische GTI-karakter: speels, direct en altijd zin in meer.',
+      'Perfect voor een weekend weg, een fotoshoot of gewoon omdat het kan. De GTI is comfortabel genoeg voor lange ritten en snel genoeg om je hart sneller te laten kloppen.',
+    ],
     features: ['Sportinterieur (GTI-stijl)', 'Apple CarPlay / Android Auto', 'Rijmodi', 'Parkeersensoren'],
     rentalText: 'Wil je \'m voor een dag, weekend of langer? App ons je periode.',
     image: golfGTIImage,
@@ -95,7 +110,13 @@ export const cars: Car[] = [
     drivetrainShort: 'Quattro',
     acceleration: '0-100 in 3.8s',
     transmission: 'Automaat (S tronic)',
+    topSpeed: '250 km/u (begrensd)',
+    fuel: 'Benzine',
     whyText: 'Voor wie echt iets speciaals wil: super snel, super strak en pure performance.',
+    description: [
+      'De Audi RS3 Sedan is het paradepaardje van ons aanbod. De iconische 2.5 vijfcilinder levert 400 pk en een geluid dat je nergens anders vindt. Van 0 naar 100 in 3.8 seconden — sneller ga je in deze klasse niet.',
+      'Quattro-vierwielaandrijving zorgt ervoor dat al die power ook daadwerkelijk op het asfalt komt. Dit is de auto voor wie één keer écht wil ervaren wat performance betekent.',
+    ],
     features: ['RS sportstoelen', 'Apple CarPlay / Android Auto', 'Performance rijmodi', 'Parkeercamera / sensoren'],
     rentalText: 'Deze is vaak snel weg. Check beschikbaarheid via WhatsApp voor de snelste reactie.',
     image: audiRS3Image,

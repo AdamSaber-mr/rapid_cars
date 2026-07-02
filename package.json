@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "predeploy": "npm run build",
+    "predeploy": "vite build --base=/rapid_cars/",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {

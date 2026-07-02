@@ -1,52 +1,71 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useParams, Link, Navigate } from 'react-router';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, Check } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, Check, Expand, MessageCircle } from 'lucide-react';
 import { cars } from '../components/carData';
 import { BeschikbaarheidModal } from '../components/BeschikbaarheidModal';
+import { Lightbox } from '../components/Lightbox';
 
 export function CarDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const car = cars.find((c) => c.slug === slug);
   const [modalOpen, setModalOpen] = useState(false);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+
+  const gallery = car?.gallery ?? [];
+  const galleryCount = gallery.length;
 
   // Reset image index when navigating to a different car
   useEffect(() => {
     setActiveImageIndex(0);
   }, [slug]);
 
+  const goToPrev = useCallback(() => {
+    setActiveImageIndex((prev) => (prev === 0 ? galleryCount - 1 : prev - 1));
+  }, [galleryCount]);
+
+  const goToNext = useCallback(() => {
+    setActiveImageIndex((prev) => (prev === galleryCount - 1 ? 0 : prev + 1));
+  }, [galleryCount]);
+
+  const openLightbox = useCallback((index: number) => {
+    setLightboxIndex(index);
+    setLightboxOpen(true);
+  }, []);
+
   if (!car) {
     return <Navigate to="/aanbod" replace />;
   }
 
   const otherCars = cars.filter((c) => c.id !== car.id);
-  const gallery = car.gallery;
-  const hasMultipleImages = gallery.length > 1;
+  const hasMultipleImages = galleryCount > 1;
+  const accelerationShort = car.acceleration.replace('0-100 in ', '');
 
-  const goToPrev = useCallback(() => {
-    setActiveImageIndex((prev) => (prev === 0 ? gallery.length - 1 : prev - 1));
-  }, [gallery.length]);
-
-  const goToNext = useCallback(() => {
-    setActiveImageIndex((prev) => (prev === gallery.length - 1 ? 0 : prev + 1));
-  }, [gallery.length]);
-
-  // Mobile specs use short drivetrain names
-  const mobileSpecs = [
+  // Compacte specs voor de sticky kaart en de mobiele strip
+  const quickSpecs = [
     { label: 'Vermogen', value: car.power },
-    { label: '0-100', value: car.acceleration.replace('0-100 in ', '') },
+    { label: '0-100', value: accelerationShort },
     { label: 'Aandrijving', value: car.drivetrainShort },
     { label: 'Transmissie', value: car.transmission },
   ];
 
-  // Desktop specs use full drivetrain names
-  const desktopSpecs = [
+  // Volledige specificatietabel
+  const specRows = [
+    { label: 'Motor', value: car.specs },
     { label: 'Vermogen', value: car.power },
-    { label: '0-100', value: car.acceleration.replace('0-100 in ', '') },
+    { label: 'Acceleratie (0-100)', value: accelerationShort },
+    { label: 'Topsnelheid', value: car.topSpeed },
     { label: 'Aandrijving', value: car.drivetrain },
     { label: 'Transmissie', value: car.transmission },
+    { label: 'Brandstof', value: car.fuel },
+    { label: 'Kleur', value: car.color },
   ];
+
+  // Foto-grid op desktop: 1 grote + max 2 kleine tiles, rest achter "+N"
+  const sideImages = gallery.slice(1, 3);
+  const hiddenCount = galleryCount - 3;
 
   return (
     <>
@@ -66,74 +85,16 @@ export function CarDetailPage() {
         </div>
 
         {/* ==================== DESKTOP LAYOUT ==================== */}
-        <section className="hidden lg:block pt-[116px]">
+        <section className="hidden lg:block pt-[130px]">
           <div className="max-w-[1440px] mx-auto px-16">
-            <div className="grid grid-cols-[1fr_360px] gap-14 xl:gap-16 items-stretch">
-
-              {/* Left: Main Image */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6 }}
-                className="flex flex-col"
-              >
-                {/* Main Image with navigation */}
-                <div className="relative aspect-[16/10] overflow-hidden bg-[#F5F5F5] flex-shrink-0">
-                  <AnimatePresence mode="wait">
-                    <motion.img
-                      key={activeImageIndex}
-                      src={gallery[activeImageIndex]}
-                      alt={`${car.name} - foto ${activeImageIndex + 1}`}
-                      className="w-full h-full object-cover"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.25 }}
-                    />
-                  </AnimatePresence>
-                  {/* Subtle overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/15 via-transparent to-transparent pointer-events-none" />
-
-                  {/* Navigation arrows */}
-                  {hasMultipleImages && (
-                    <>
-                      <button
-                        onClick={goToPrev}
-                        className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-all duration-200 opacity-0 hover:opacity-100 group-hover:opacity-100"
-                        style={{ opacity: 1 }}
-                        aria-label="Vorige foto"
-                      >
-                        <ChevronLeft className="w-5 h-5 text-[#0A0A0A]" strokeWidth={1.5} />
-                      </button>
-                      <button
-                        onClick={goToNext}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-all duration-200"
-                        aria-label="Volgende foto"
-                      >
-                        <ChevronRight className="w-5 h-5 text-[#0A0A0A]" strokeWidth={1.5} />
-                      </button>
-                    </>
-                  )}
-
-                  {/* Image counter badge */}
-                  {hasMultipleImages && (
-                    <div
-                      className="absolute bottom-4 right-4 bg-black/50 backdrop-blur-sm text-white px-3 py-1"
-                      style={{ fontSize: '11px', fontWeight: 500 }}
-                    >
-                      {activeImageIndex + 1} / {gallery.length}
-                    </div>
-                  )}
-                </div>
-              </motion.div>
-
-              {/* Right: Info Panel */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                className="flex flex-col"
-              >
+            {/* Header */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="flex items-end justify-between gap-8 mb-8"
+            >
+              <div>
                 <p
                   className="text-[#7A1C1C] text-[11px] tracking-[0.2em] uppercase mb-3"
                   style={{ fontWeight: 600 }}
@@ -141,52 +102,149 @@ export function CarDetailPage() {
                   {car.category} &middot; {car.color}
                 </p>
                 <h1
-                  className="text-[#0A0A0A] text-[2rem] xl:text-[2.25rem] tracking-[-0.03em] mb-3"
-                  style={{ fontWeight: 600, lineHeight: 1.1 }}
+                  className="text-[#0A0A0A] text-[2.5rem] xl:text-[3rem] tracking-[-0.03em]"
+                  style={{ fontWeight: 600, lineHeight: 1.05 }}
                 >
                   {car.name}
                 </h1>
-                <p
-                  className="text-[#4A4A4A] mb-6"
-                  style={{ fontSize: '14px', fontWeight: 400, lineHeight: 1.65 }}
+              </div>
+              <p
+                className="text-[#4A4A4A] max-w-[380px] text-right pb-1"
+                style={{ fontSize: '14px', fontWeight: 400, lineHeight: 1.65 }}
+              >
+                {car.whyText}
+              </p>
+            </motion.div>
+
+            {/* Photo grid */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.99 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className={`grid gap-2 h-[520px] xl:h-[560px] ${
+                galleryCount === 1 ? 'grid-cols-1' : 'grid-cols-5 grid-rows-2'
+              }`}
+            >
+              {/* Main image */}
+              <button
+                onClick={() => openLightbox(0)}
+                className={`group relative overflow-hidden bg-[#F5F5F5] cursor-zoom-in ${
+                  galleryCount === 1 ? '' : 'col-span-3 row-span-2'
+                }`}
+                aria-label="Bekijk foto op volledig scherm"
+              >
+                <img
+                  src={gallery[0]}
+                  alt={`${car.name} - foto 1`}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
+                {/* Alle foto's knop */}
+                <div
+                  className="absolute bottom-5 left-5 flex items-center gap-2 bg-white/95 backdrop-blur-sm text-[#0A0A0A] px-4 py-2.5 opacity-90 group-hover:opacity-100 transition-opacity duration-300"
+                  style={{ fontSize: '12px', fontWeight: 500 }}
                 >
-                  {car.whyText}
-                </p>
-
-                {/* Specs 2x2 */}
-                <div className="grid grid-cols-2 gap-px bg-[#EBEBEB] mb-6">
-                  {desktopSpecs.map((spec) => (
-                    <div key={spec.label} className="bg-[#FAFAFA] py-3.5 px-3 text-center">
-                      <p
-                        className="text-[#0A0A0A] mb-0.5"
-                        style={{ fontSize: '14px', fontWeight: 600, letterSpacing: '-0.01em' }}
-                      >
-                        {spec.value}
-                      </p>
-                      <p
-                        className="text-[#9A9A9A]"
-                        style={{ fontSize: '9px', fontWeight: 500, letterSpacing: '0.1em', textTransform: 'uppercase' }}
-                      >
-                        {spec.label}
-                      </p>
-                    </div>
-                  ))}
+                  <Expand className="w-3.5 h-3.5" strokeWidth={1.5} />
+                  Bekijk alle foto's ({galleryCount})
                 </div>
+              </button>
 
-                {/* Features - vertical list */}
-                <div className="mb-6">
+              {/* Side tiles */}
+              {sideImages.map((img, i) => {
+                const imageIndex = i + 1;
+                const isLastTile = i === sideImages.length - 1;
+                const showOverlay = isLastTile && hiddenCount > 0;
+                return (
+                  <button
+                    key={imageIndex}
+                    onClick={() => openLightbox(imageIndex)}
+                    className={`group relative overflow-hidden bg-[#F5F5F5] cursor-zoom-in col-span-2 ${
+                      galleryCount === 2 ? 'row-span-2' : ''
+                    }`}
+                    aria-label={`Bekijk foto ${imageIndex + 1} op volledig scherm`}
+                  >
+                    <img
+                      src={img}
+                      alt={`${car.name} - foto ${imageIndex + 1}`}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                    />
+                    {showOverlay ? (
+                      <div className="absolute inset-0 bg-black/55 flex items-center justify-center transition-colors duration-300 group-hover:bg-black/45">
+                        <span
+                          className="text-white"
+                          style={{ fontSize: '15px', fontWeight: 500 }}
+                        >
+                          +{hiddenCount} foto{hiddenCount > 1 ? "'s" : ''}
+                        </span>
+                      </div>
+                    ) : (
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+                    )}
+                  </button>
+                );
+              })}
+            </motion.div>
+
+            {/* Content: links info, rechts sticky CTA-kaart */}
+            <div className="grid grid-cols-[1fr_440px] gap-14 xl:gap-16 pt-14 pb-20 items-start">
+              {/* Left column */}
+              <div className="max-w-[680px]">
+                {/* Over deze auto */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-60px' }}
+                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                  className="mb-12"
+                >
                   <p
-                    className="text-[#9A9A9A] text-[9px] tracking-[0.15em] uppercase mb-3"
+                    className="text-[#7A1C1C] text-[11px] tracking-[0.2em] uppercase mb-3"
                     style={{ fontWeight: 600 }}
                   >
-                    Features
+                    {car.detailTagline}
                   </p>
-                  <div className="flex flex-col gap-2">
+                  <h2
+                    className="text-[#0A0A0A] text-[1.5rem] tracking-[-0.02em] mb-5"
+                    style={{ fontWeight: 600, lineHeight: 1.2 }}
+                  >
+                    Over deze auto
+                  </h2>
+                  <div className="flex flex-col gap-4">
+                    {car.description.map((paragraph, i) => (
+                      <p
+                        key={i}
+                        className="text-[#4A4A4A]"
+                        style={{ fontSize: '15px', fontWeight: 400, lineHeight: 1.75 }}
+                      >
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                </motion.div>
+
+                {/* Uitrusting */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-60px' }}
+                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                  className="mb-12"
+                >
+                  <h2
+                    className="text-[#0A0A0A] text-[1.5rem] tracking-[-0.02em] mb-5"
+                    style={{ fontWeight: 600, lineHeight: 1.2 }}
+                  >
+                    Uitrusting
+                  </h2>
+                  <div className="grid grid-cols-2 gap-3">
                     {car.features.map((feature) => (
-                      <div key={feature} className="flex items-center gap-2">
-                        <Check className="w-3.5 h-3.5 text-[#7A1C1C] flex-shrink-0" strokeWidth={2.5} />
+                      <div
+                        key={feature}
+                        className="flex items-center gap-3 py-3 px-4 bg-[#FAFAFA] border border-[#F0F0F0]"
+                      >
+                        <Check className="w-4 h-4 text-[#7A1C1C] flex-shrink-0" strokeWidth={2.5} />
                         <span
-                          className="text-[#4A4A4A]"
+                          className="text-[#0A0A0A]"
                           style={{ fontSize: '14px', fontWeight: 400 }}
                         >
                           {feature}
@@ -194,83 +252,114 @@ export function CarDetailPage() {
                       </div>
                     ))}
                   </div>
-                </div>
+                </motion.div>
 
-                {/* Spacer */}
-                <div className="flex-1" />
-
-                {/* CTA */}
-                <button
-                  onClick={() => setModalOpen(true)}
-                  className="flex items-center justify-center gap-3 w-full bg-[#7A1C1C] text-white py-4 hover:bg-[#651717] transition-colors duration-300"
-                  style={{ fontSize: '13px', fontWeight: 500, letterSpacing: '0.05em', textTransform: 'uppercase' }}
-                >
-                  Check beschikbaarheid
-                  <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
-                </button>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* ==================== DESKTOP GALLERY STRIP ==================== */}
-        {hasMultipleImages && (
-          <section className="hidden lg:block pt-5 pb-2">
-            <div className="max-w-[1440px] mx-auto px-16">
-              {/* Only spans the left column width */}
-              <div style={{ maxWidth: 'calc(100% - 360px - 3.5rem)' }}>
+                {/* Specificaties */}
                 <motion.div
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-60px' }}
-                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                  className="flex gap-2.5"
+                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  {gallery.map((img, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setActiveImageIndex(i)}
-                      className={`relative flex-1 aspect-[16/10] overflow-hidden transition-all duration-300 ${
-                        i === activeImageIndex
-                          ? 'ring-2 ring-[#0A0A0A] ring-offset-2 opacity-100'
-                          : 'opacity-40 hover:opacity-70'
-                      }`}
-                    >
-                      <img
-                        src={img}
-                        alt={`${car.name} foto ${i + 1}`}
-                        className="w-full h-full object-cover"
-                      />
-                    </button>
-                  ))}
+                  <h2
+                    className="text-[#0A0A0A] text-[1.5rem] tracking-[-0.02em] mb-5"
+                    style={{ fontWeight: 600, lineHeight: 1.2 }}
+                  >
+                    Specificaties
+                  </h2>
+                  <div className="border-t border-[#EBEBEB]">
+                    {specRows.map((row) => (
+                      <div
+                        key={row.label}
+                        className="grid grid-cols-[220px_1fr] py-3.5 border-b border-[#EBEBEB]"
+                      >
+                        <span
+                          className="text-[#9A9A9A]"
+                          style={{ fontSize: '13px', fontWeight: 500 }}
+                        >
+                          {row.label}
+                        </span>
+                        <span
+                          className="text-[#0A0A0A]"
+                          style={{ fontSize: '14px', fontWeight: 500 }}
+                        >
+                          {row.value}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </motion.div>
               </div>
-            </div>
-          </section>
-        )}
 
-        {/* ==================== DESKTOP CONTENT (below gallery) ==================== */}
-        <section className="hidden lg:block py-12">
-          <div className="max-w-[1440px] mx-auto px-16">
-            <div className="max-w-[720px]">
+              {/* Right: sticky CTA card */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.25 }}
+                className="sticky top-[130px]"
               >
-                <p
-                  className="text-[#7A1C1C] text-[12px] tracking-[0.2em] uppercase mb-3"
-                  style={{ fontWeight: 600 }}
-                >
-                  {car.detailTagline}
-                </p>
-                <p
-                  className="text-[#4A4A4A]"
-                  style={{ fontSize: '14px', fontWeight: 400, lineHeight: 1.7 }}
-                >
-                  {car.rentalText}
-                </p>
+                <div className="border border-[#E4E4E4] bg-white shadow-[0_2px_24px_rgba(0,0,0,0.05)]">
+                  <div className="p-9">
+                    <p
+                      className="text-[#7A1C1C] text-[11px] tracking-[0.2em] uppercase mb-2.5"
+                      style={{ fontWeight: 600 }}
+                    >
+                      Huur deze auto
+                    </p>
+                    <h3
+                      className="text-[#0A0A0A] text-[1.75rem] tracking-[-0.02em] mb-7"
+                      style={{ fontWeight: 600, lineHeight: 1.15 }}
+                    >
+                      {car.name}
+                    </h3>
+
+                    {/* Quick specs 2x2 */}
+                    <div className="grid grid-cols-2 gap-px bg-[#EBEBEB] mb-7">
+                      {quickSpecs.map((spec) => (
+                        <div key={spec.label} className="bg-[#FAFAFA] py-4.5 px-3 text-center">
+                          <p
+                            className="text-[#0A0A0A] mb-1"
+                            style={{ fontSize: '16px', fontWeight: 600, letterSpacing: '-0.01em' }}
+                          >
+                            {spec.value}
+                          </p>
+                          <p
+                            className="text-[#9A9A9A]"
+                            style={{ fontSize: '10px', fontWeight: 500, letterSpacing: '0.1em', textTransform: 'uppercase' }}
+                          >
+                            {spec.label}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+
+                    <button
+                      onClick={() => setModalOpen(true)}
+                      className="flex items-center justify-center gap-3 w-full bg-[#7A1C1C] text-white py-5 hover:bg-[#651717] transition-colors duration-300 mb-5"
+                      style={{ fontSize: '14px', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase' }}
+                    >
+                      Check beschikbaarheid
+                      <ArrowRight className="w-4.5 h-4.5" strokeWidth={1.5} />
+                    </button>
+
+                    <p
+                      className="text-[#4A4A4A] mb-5"
+                      style={{ fontSize: '13.5px', fontWeight: 400, lineHeight: 1.65 }}
+                    >
+                      {car.rentalText}
+                    </p>
+
+                    <div className="flex items-center gap-2.5 pt-5 border-t border-[#F0F0F0]">
+                      <MessageCircle className="w-4 h-4 text-[#25D366] flex-shrink-0" strokeWidth={1.5} />
+                      <span
+                        className="text-[#9A9A9A]"
+                        style={{ fontSize: '12.5px', fontWeight: 400 }}
+                      >
+                        Reactie binnen een paar uur via WhatsApp
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </motion.div>
             </div>
           </div>
@@ -278,7 +367,7 @@ export function CarDetailPage() {
 
         {/* ==================== MOBILE LAYOUT ==================== */}
         <section className="lg:hidden pt-[102px]">
-          {/* Mobile Gallery - swipeable */}
+          {/* Mobile Gallery */}
           <div className="px-6">
             <motion.div
               initial={{ opacity: 0, scale: 0.98 }}
@@ -296,12 +385,22 @@ export function CarDetailPage() {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.2 }}
+                  onClick={() => openLightbox(activeImageIndex)}
                 />
               </AnimatePresence>
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
 
+              {/* Fullscreen badge */}
+              <button
+                onClick={() => openLightbox(activeImageIndex)}
+                className="absolute top-3 right-3 w-9 h-9 bg-black/40 backdrop-blur-sm flex items-center justify-center"
+                aria-label="Bekijk foto op volledig scherm"
+              >
+                <Expand className="w-4 h-4 text-white" strokeWidth={1.5} />
+              </button>
+
               {/* Car name overlay */}
-              <div className="absolute bottom-4 left-5">
+              <div className="absolute bottom-4 left-5 pointer-events-none">
                 <p
                   className="text-white/60 text-[10px] tracking-[0.15em] uppercase mb-1"
                   style={{ fontWeight: 500 }}
@@ -346,6 +445,7 @@ export function CarDetailPage() {
                       className={`h-1.5 rounded-full transition-all duration-300 ${
                         i === activeImageIndex ? 'bg-white w-4' : 'bg-white/40 w-1.5'
                       }`}
+                      aria-label={`Foto ${i + 1}`}
                     />
                   ))}
                 </div>
@@ -361,7 +461,7 @@ export function CarDetailPage() {
             className="mx-6 bg-[#0A0A0A]"
           >
             <div className="grid grid-cols-2">
-              {mobileSpecs.map((spec, i) => (
+              {quickSpecs.map((spec, i) => (
                 <div
                   key={spec.label}
                   className={`py-3 px-3 text-center ${
@@ -390,13 +490,13 @@ export function CarDetailPage() {
         <section className="lg:hidden py-10">
           <div className="px-6">
             <div className="max-w-[720px]">
-              {/* Tagline + why text */}
+              {/* Over deze auto */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                className="mb-8"
+                className="mb-9"
               >
                 <p
                   className="text-[#7A1C1C] text-[11px] tracking-[0.2em] uppercase mb-3"
@@ -404,28 +504,39 @@ export function CarDetailPage() {
                 >
                   {car.detailTagline}
                 </p>
-                <p
-                  className="text-[#0A0A0A] text-[1.15rem] tracking-[-0.02em]"
-                  style={{ fontWeight: 500, lineHeight: 1.4 }}
+                <h2
+                  className="text-[#0A0A0A] text-[1.3rem] tracking-[-0.02em] mb-4"
+                  style={{ fontWeight: 600, lineHeight: 1.2 }}
                 >
-                  {car.whyText}
-                </p>
+                  Over deze auto
+                </h2>
+                <div className="flex flex-col gap-3.5">
+                  {car.description.map((paragraph, i) => (
+                    <p
+                      key={i}
+                      className="text-[#4A4A4A]"
+                      style={{ fontSize: '14px', fontWeight: 400, lineHeight: 1.7 }}
+                    >
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
               </motion.div>
 
-              {/* Features */}
+              {/* Uitrusting */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.5, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
-                className="mb-8"
+                className="mb-9"
               >
-                <p
-                  className="text-[#4A4A4A] text-[10px] tracking-[0.15em] uppercase mb-3"
-                  style={{ fontWeight: 600 }}
+                <h2
+                  className="text-[#0A0A0A] text-[1.3rem] tracking-[-0.02em] mb-4"
+                  style={{ fontWeight: 600, lineHeight: 1.2 }}
                 >
-                  Features
-                </p>
+                  Uitrusting
+                </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {car.features.map((feature) => (
                     <div
@@ -438,6 +549,43 @@ export function CarDetailPage() {
                         style={{ fontSize: '13px', fontWeight: 400 }}
                       >
                         {feature}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+
+              {/* Specificaties */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{ duration: 0.5, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+                className="mb-9"
+              >
+                <h2
+                  className="text-[#0A0A0A] text-[1.3rem] tracking-[-0.02em] mb-4"
+                  style={{ fontWeight: 600, lineHeight: 1.2 }}
+                >
+                  Specificaties
+                </h2>
+                <div className="border-t border-[#EBEBEB]">
+                  {specRows.map((row) => (
+                    <div
+                      key={row.label}
+                      className="flex items-center justify-between gap-4 py-3 border-b border-[#EBEBEB]"
+                    >
+                      <span
+                        className="text-[#9A9A9A]"
+                        style={{ fontSize: '13px', fontWeight: 500 }}
+                      >
+                        {row.label}
+                      </span>
+                      <span
+                        className="text-[#0A0A0A] text-right"
+                        style={{ fontSize: '13px', fontWeight: 500 }}
+                      >
+                        {row.value}
                       </span>
                     </div>
                   ))}
@@ -573,6 +721,14 @@ export function CarDetailPage() {
         car={car}
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
+      />
+
+      <Lightbox
+        images={gallery}
+        carName={car.name}
+        isOpen={lightboxOpen}
+        initialIndex={lightboxIndex}
+        onClose={() => setLightboxOpen(false)}
       />
     </>
   );

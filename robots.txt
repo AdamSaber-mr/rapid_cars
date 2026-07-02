@@ -1,0 +1,5 @@
+# All crawlers — including AI assistants (GPTBot, ClaudeBot, PerplexityBot, etc.) — are welcome.
+User-agent: *
+Allow: /
+
+Sitemap: https://adamsaber-mr.github.io/rapid_cars/sitemap.xml

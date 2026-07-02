@@ -124,6 +124,7 @@ export function MeestGevraagdeAutos() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canLeft, setCanLeft] = useState(false);
   const [canRight, setCanRight] = useState(true);
+  const [progress, setProgress] = useState(0);
 
   const updateArrows = () => {
     const el = scrollRef.current;
@@ -131,6 +132,7 @@ export function MeestGevraagdeAutos() {
     const { scrollLeft, scrollWidth, clientWidth } = el;
     setCanLeft(scrollLeft > 8);
     setCanRight(scrollLeft < scrollWidth - clientWidth - 8);
+    setProgress(scrollWidth > clientWidth ? scrollLeft / (scrollWidth - clientWidth) : 0);
   };
 
   useEffect(() => {
@@ -154,7 +156,7 @@ export function MeestGevraagdeAutos() {
   };
 
   const arrowClasses =
-    'absolute top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[#3A3A3A] bg-[#2A2A2A] text-white shadow-[0_6px_20px_rgba(0,0,0,0.5)] transition-colors duration-200 hover:border-white hover:bg-white hover:text-[#0A0A0A] lg:h-12 lg:w-12';
+    'absolute top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[#3A3A3A] bg-[#2A2A2A] text-white shadow-[0_6px_20px_rgba(0,0,0,0.5)] transition-colors duration-200 hover:border-white hover:bg-white hover:text-[#0A0A0A] sm:flex lg:h-12 lg:w-12';
 
   return (
     <section
@@ -197,22 +199,13 @@ export function MeestGevraagdeAutos() {
             ref={scrollRef}
             className="flex snap-x snap-mandatory gap-5 overflow-x-auto overflow-y-hidden pt-2 pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
-            {showcaseCars.map((item, index) => (
-              <motion.div
+            {showcaseCars.map((item) => (
+              <div
                 key={item.id}
-                className="w-[82%] shrink-0 snap-start sm:w-[47%] lg:w-[31.5%]"
-                initial={{ opacity: 0, y: 32, scale: 0.97 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{
-                  duration: 0.6,
-                  ease: EASE_OUT,
-                  delay: (index % 3) * 0.12,
-                }}
-                whileHover={{ y: -6, transition: { duration: 0.3, ease: EASE_OUT } }}
+                className="w-[82%] shrink-0 snap-start transition-transform duration-300 ease-out sm:w-[47%] lg:w-[31.5%] lg:hover:-translate-y-1.5"
               >
                 <ShowcaseCard item={item} />
-              </motion.div>
+              </div>
             ))}
           </div>
 
@@ -250,6 +243,24 @@ export function MeestGevraagdeAutos() {
             )}
           </AnimatePresence>
         </motion.div>
+
+        {/* Mobiel: scroll-indicator + bekijk alles */}
+        <div className="mt-7 flex flex-col items-center gap-5 sm:hidden">
+          <div className="h-[3px] w-28 overflow-hidden rounded-full bg-white/10">
+            <div
+              className="h-full rounded-full bg-white/60 transition-[width] duration-150 ease-out"
+              style={{ width: `${Math.round((0.12 + progress * 0.88) * 100)}%` }}
+            />
+          </div>
+          <Link
+            to="/aanbod"
+            className="inline-flex items-center gap-1.5 text-[14px] text-[#9A9A9A] transition-colors hover:text-white"
+            style={{ fontWeight: 500 }}
+          >
+            Bekijk alles
+            <ArrowRight className="h-4 w-4" strokeWidth={1.8} />
+          </Link>
+        </div>
       </div>
     </section>
   );

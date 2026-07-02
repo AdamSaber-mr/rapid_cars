@@ -12,7 +12,7 @@ export function Hero() {
   };
 
   return (
-    <section className="relative h-screen w-full overflow-hidden">
+    <section className="relative min-h-[100svh] w-full overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
@@ -24,7 +24,7 @@ export function Hero() {
       </div>
 
       {/* Content */}
-      <div className="relative h-full flex flex-col justify-end pb-32 md:pb-28 lg:pb-32">
+      <div className="relative min-h-[100svh] flex flex-col justify-end pt-28 pb-24 sm:pb-28 lg:pb-32">
         <div className="max-w-[1440px] mx-auto w-full px-6 lg:px-16">
           <div className="max-w-[800px]">
             <motion.p
@@ -67,7 +67,7 @@ export function Hero() {
             >
               <Link
                 to="/aanbod"
-                className="inline-flex items-center justify-center bg-[#7A1C1C] text-white px-10 py-4 text-[14px] tracking-[0.04em] uppercase hover:bg-[#651717] transition-colors duration-300"
+                className="inline-flex w-full sm:w-auto items-center justify-center bg-[#7A1C1C] text-white px-10 py-4 text-[14px] tracking-[0.04em] uppercase hover:bg-[#651717] transition-colors duration-300"
                 style={{ fontFamily: 'Inter, sans-serif', fontWeight: 500 }}
               >
                 Bekijk Aanbod
@@ -75,7 +75,7 @@ export function Hero() {
               <button
                 type="button"
                 onClick={scrollToHowItWorks}
-                className="inline-flex items-center justify-center border border-white/30 text-white px-10 py-4 text-[14px] tracking-[0.04em] uppercase hover:bg-white/10 transition-colors duration-300"
+                className="inline-flex w-full sm:w-auto items-center justify-center border border-white/30 text-white px-10 py-4 text-[14px] tracking-[0.04em] uppercase hover:bg-white/10 transition-colors duration-300"
                 style={{ fontFamily: 'Inter, sans-serif', fontWeight: 500 }}
               >
                 Hoe Het Werkt

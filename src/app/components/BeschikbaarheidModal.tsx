@@ -72,7 +72,7 @@ export function BeschikbaarheidModal({ car, isOpen, onClose }: BeschikbaarheidMo
               {/* Close button — half sticking out top-right */}
               <button
                 onClick={onClose}
-                className="absolute -top-3 -right-3 sm:-top-4 sm:-right-4 w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center bg-[#7A1C1C] rounded-full shadow-lg hover:bg-[#651717] transition-colors z-30"
+                className="absolute -top-2 -right-2 sm:-top-4 sm:-right-4 w-11 h-11 sm:w-10 sm:h-10 flex items-center justify-center bg-[#7A1C1C] rounded-full shadow-lg hover:bg-[#651717] transition-colors z-30"
                 aria-label="Sluiten"
               >
                 <X className="w-5 h-5 text-white" strokeWidth={2.5} />

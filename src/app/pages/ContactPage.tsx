@@ -266,8 +266,8 @@ export function ContactPage() {
                           onChange={handleChange}
                           required
                           placeholder="Je naam"
-                          className="w-full px-4 py-3 bg-[#F7F7F7] border border-[#E8E8E8] text-[#0A0A0A] placeholder:text-[#B0B0B0] focus:outline-none focus:border-[#0A0A0A] transition-colors duration-300"
-                          style={{ fontWeight: 400, fontSize: '14px' }}
+                          className="w-full px-4 py-3 bg-[#F7F7F7] border border-[#E8E8E8] text-[#0A0A0A] placeholder:text-[#B0B0B0] focus:outline-none focus:border-[#0A0A0A] transition-colors duration-300 text-[16px] sm:text-[14px]"
+                          style={{ fontWeight: 400 }}
                         />
                       </div>
                       <div>
@@ -284,8 +284,8 @@ export function ContactPage() {
                           onChange={handleChange}
                           required
                           placeholder="06 12 34 56 78"
-                          className="w-full px-4 py-3 bg-[#F7F7F7] border border-[#E8E8E8] text-[#0A0A0A] placeholder:text-[#B0B0B0] focus:outline-none focus:border-[#0A0A0A] transition-colors duration-300"
-                          style={{ fontWeight: 400, fontSize: '14px' }}
+                          className="w-full px-4 py-3 bg-[#F7F7F7] border border-[#E8E8E8] text-[#0A0A0A] placeholder:text-[#B0B0B0] focus:outline-none focus:border-[#0A0A0A] transition-colors duration-300 text-[16px] sm:text-[14px]"
+                          style={{ fontWeight: 400 }}
                         />
                       </div>
                     </div>
@@ -305,8 +305,8 @@ export function ContactPage() {
                         value={form.email}
                         onChange={handleChange}
                         placeholder="je@email.nl"
-                        className="w-full px-4 py-3 bg-[#F7F7F7] border border-[#E8E8E8] text-[#0A0A0A] placeholder:text-[#B0B0B0] focus:outline-none focus:border-[#0A0A0A] transition-colors duration-300"
-                        style={{ fontWeight: 400, fontSize: '14px' }}
+                        className="w-full px-4 py-3 bg-[#F7F7F7] border border-[#E8E8E8] text-[#0A0A0A] placeholder:text-[#B0B0B0] focus:outline-none focus:border-[#0A0A0A] transition-colors duration-300 text-[16px] sm:text-[14px]"
+                        style={{ fontWeight: 400 }}
                       />
                     </div>
 
@@ -323,8 +323,8 @@ export function ContactPage() {
                           name="auto"
                           value={form.auto}
                           onChange={handleChange}
-                          className="w-full px-4 py-3 bg-[#F7F7F7] border border-[#E8E8E8] text-[#0A0A0A] focus:outline-none focus:border-[#0A0A0A] transition-colors duration-300 appearance-none"
-                          style={{ fontWeight: 400, fontSize: '14px' }}
+                          className="w-full px-4 py-3 bg-[#F7F7F7] border border-[#E8E8E8] text-[#0A0A0A] focus:outline-none focus:border-[#0A0A0A] transition-colors duration-300 appearance-none text-[16px] sm:text-[14px]"
+                          style={{ fontWeight: 400 }}
                         >
                           <option value="">Selecteer een auto</option>
                           {cars.map((car) => (
@@ -347,8 +347,8 @@ export function ContactPage() {
                           value={form.periode}
                           onChange={handleChange}
                           placeholder="Bijv. 15-20 maart"
-                          className="w-full px-4 py-3 bg-[#F7F7F7] border border-[#E8E8E8] text-[#0A0A0A] placeholder:text-[#B0B0B0] focus:outline-none focus:border-[#0A0A0A] transition-colors duration-300"
-                          style={{ fontWeight: 400, fontSize: '14px' }}
+                          className="w-full px-4 py-3 bg-[#F7F7F7] border border-[#E8E8E8] text-[#0A0A0A] placeholder:text-[#B0B0B0] focus:outline-none focus:border-[#0A0A0A] transition-colors duration-300 text-[16px] sm:text-[14px]"
+                          style={{ fontWeight: 400 }}
                         />
                       </div>
                     </div>
@@ -368,8 +368,8 @@ export function ContactPage() {
                         onChange={handleChange}
                         rows={4}
                         placeholder="Heb je specifieke wensen of vragen?"
-                        className="w-full px-4 py-3 bg-[#F7F7F7] border border-[#E8E8E8] text-[#0A0A0A] placeholder:text-[#B0B0B0] focus:outline-none focus:border-[#0A0A0A] transition-colors duration-300 resize-none"
-                        style={{ fontWeight: 400, fontSize: '14px' }}
+                        className="w-full px-4 py-3 bg-[#F7F7F7] border border-[#E8E8E8] text-[#0A0A0A] placeholder:text-[#B0B0B0] focus:outline-none focus:border-[#0A0A0A] transition-colors duration-300 resize-none text-[16px] sm:text-[14px]"
+                        style={{ fontWeight: 400 }}
                       />
                     </div>
 

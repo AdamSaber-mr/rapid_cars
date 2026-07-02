@@ -53,7 +53,7 @@ function getInitials(name: string) {
 export function Testimonials() {
   return (
     <section
-      className="border-t border-[#262626] bg-[#181818] py-28 sm:py-36 lg:py-44"
+      className="border-t border-[#262626] bg-[#181818] py-16 sm:py-28 lg:py-44"
       style={{ fontFamily: SECTION_FONT }}
     >
       <div className="mx-auto max-w-[1440px] px-6 lg:px-16">

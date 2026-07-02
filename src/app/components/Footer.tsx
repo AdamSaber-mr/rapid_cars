@@ -38,7 +38,7 @@ export function Footer() {
                 <li key={link.label}>
                   <Link
                     to={link.href}
-                    className="text-white/60 hover:text-white transition-colors duration-300"
+                    className="inline-block py-1 text-white/60 hover:text-white transition-colors duration-300"
                     style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400, fontSize: '13px' }}
                   >
                     {link.label}
@@ -144,14 +144,14 @@ export function Footer() {
           <div className="flex gap-6 lg:gap-8">
             <a
               href="#"
-              className="text-white/30 hover:text-white/60 transition-colors duration-300"
+              className="inline-block py-1.5 text-white/30 hover:text-white/60 transition-colors duration-300"
               style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400, fontSize: '12px' }}
             >
               Privacybeleid
             </a>
             <a
               href="#"
-              className="text-white/30 hover:text-white/60 transition-colors duration-300"
+              className="inline-block py-1.5 text-white/30 hover:text-white/60 transition-colors duration-300"
               style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400, fontSize: '12px' }}
             >
               Algemene Voorwaarden
